@@ -2,5 +2,6 @@
   "@@locale": "es",
   "appTitle": "Aplicación de Viajes",
   "welcomeMessage": "¡Bienvenido!",
-  "homePageTitle": "Inicio"
+  "homePageTitle": "Inicio",
+  "noTravelsMessage": "Ningún viaje registrado aún."
 }

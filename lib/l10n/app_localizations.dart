@@ -117,6 +117,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get homePageTitle;
+
+  /// No description provided for @noTravelsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No trips registered yet.'**
+  String get noTravelsMessage;
 }
 
 class _AppLocalizationsDelegate

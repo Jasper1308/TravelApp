@@ -16,4 +16,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homePageTitle => 'Inicio';
+
+  @override
+  String get noTravelsMessage => 'Ningún viaje registrado aún.';
 }

@@ -16,4 +16,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get homePageTitle => 'Início';
+
+  @override
+  String get noTravelsMessage => 'Nenhuma viagem cadastrada ainda.';
 }

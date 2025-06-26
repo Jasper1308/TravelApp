@@ -16,4 +16,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homePageTitle => 'Home';
+
+  @override
+  String get noTravelsMessage => 'No trips registered yet.';
 }
