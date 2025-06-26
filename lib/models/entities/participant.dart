@@ -1,9 +1,9 @@
 class Participant{
-  String name;
-  int age;
+  final String name;
+  final String age;
 
-  Participant(
-      this.name,
-      this.age
-      );
+  Participant({
+    required this.name,
+    required this.age
+  });
 }
