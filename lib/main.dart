@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:travel_app/views/home_page.dart';
+import 'package:travel_app/views/app_root.dart';
 
 import 'l10n/app_localizations.dart';
 
@@ -26,11 +26,7 @@ class MyApp extends StatelessWidget {
         Locale('es'),
         Locale('pt'),
       ],
-
-      initialRoute: '/',
-      routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => HomePage(),
-      },
+      home: AppRoot(),
     );
   }
 }
