@@ -1,8 +1,8 @@
 class TravelStop{
   final String cityName;
   final String coordinates;
-  final String arrivalDate;
-  final String departureDate;
+  final DateTime arrivalDate;
+  final DateTime departureDate;
   final String lenghtStay;
   final String description;
 
