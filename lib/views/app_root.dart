@@ -21,18 +21,53 @@ class _AppRootState extends State<AppRoot> {
     pc = PageController(initialPage: selectedRoute);
   }
 
+  setPage(page){
+    setState(() {
+      selectedRoute = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
         controller: pc,
+        onPageChanged: setPage,
         children: [
           MyTravelsScreen(),
-          PreferencesScreen(),
-          ProfileScreen(),
           TravelForm(),
+          ProfileScreen(),
+          PreferencesScreen()
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedRoute,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'Minhas Viagens'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add),
+              label: 'Nova Viagem'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Perfil'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Preferências'
+          ),
+        ],
+        onTap: (index) {
+          pc.animateToPage(index, duration: Duration(microseconds: 400), curve: Curves.ease);
+        },
+        selectedItemColor: Colors.indigo,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+
+      )
     );
   }
 }

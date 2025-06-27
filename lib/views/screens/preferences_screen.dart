@@ -15,6 +15,13 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         title: const Text('Preferências'),
         centerTitle: true,
       ),
+      body: Center(
+        child: Column(
+          children: [
+
+          ],
+        ),
+      ),
     );
   }
 }
