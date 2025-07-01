@@ -3,7 +3,7 @@ import 'package:travel_app/models/entities/travel_stop.dart';
 import 'package:travel_app/models/enums/experience_type.dart';
 import 'package:travel_app/models/enums/transport_type.dart';
 
-class Travel{
+class Travel {
   final String name;
   final DateTime initialDate;
   final DateTime endDate;

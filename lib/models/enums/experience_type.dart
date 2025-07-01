@@ -1,7 +1,7 @@
 enum ExperienceType { culture, culinary, historic, localEstablishments, nature }
 
 extension ExperienceTypeExtension on ExperienceType {
-  String get toString {
+  String get displayString {
     switch (this) {
       case ExperienceType.culture:
         return 'Cultura';

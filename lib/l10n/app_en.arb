@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
   "appTitle": "Travel App",
-  "welcomeMessage": "Welcome to Lince Travel App!",
+  "welcomeMessage": "Welcome!",
   "homePageTitle": "Home",
   "noTravelsMessage": "No trips registered yet."
 }

@@ -1,9 +1,7 @@
-class Participant{
+class Participant {
   final String name;
   final String age;
+  final String photoPath;
 
-  Participant({
-    required this.name,
-    required this.age
-  });
+  Participant({required this.name, required this.age, this.photoPath = ''});
 }

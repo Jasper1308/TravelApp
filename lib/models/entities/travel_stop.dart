@@ -1,10 +1,10 @@
-class TravelStop{
+class TravelStop {
   final String cityName;
   final String coordinates;
   final DateTime arrivalDate;
   final DateTime departureDate;
-  final String lenghtStay;
-  final String description;
+  final Duration lenghtStay;
+  //final String description;
 
   TravelStop({
     required this.cityName,
@@ -12,6 +12,6 @@ class TravelStop{
     required this.arrivalDate,
     required this.departureDate,
     required this.lenghtStay,
-    required this.description
+    //required this.description,
   });
 }

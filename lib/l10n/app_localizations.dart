@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeMessage.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Lince Travel App!'**
+  /// **'Welcome!'**
   String get welcomeMessage;
 
   /// No description provided for @homePageTitle.

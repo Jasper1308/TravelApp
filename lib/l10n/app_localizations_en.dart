@@ -12,7 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Travel App';
 
   @override
-  String get welcomeMessage => 'Welcome to Lince Travel App!';
+  String get welcomeMessage => 'Welcome!';
 
   @override
   String get homePageTitle => 'Home';

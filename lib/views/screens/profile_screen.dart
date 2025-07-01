@@ -6,14 +6,11 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Perfil'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Perfil'), centerTitle: true),
       body: Center(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: 200,
               width: 200,
               child: CircleAvatar(
@@ -23,10 +20,7 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Nome do Usuário',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
           ],
         ),
