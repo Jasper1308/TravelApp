@@ -48,7 +48,7 @@ class _TravelFormState extends State<TravelForm> {
                   items: TransportType.values.map((type) {
                     return DropdownMenuItem<TransportType>(
                       value: type,
-                      child: Text(type.displayString),
+                      child: Text(type.intlString(context)),
                     );
                   }).toList(),
                   onChanged: (value) {

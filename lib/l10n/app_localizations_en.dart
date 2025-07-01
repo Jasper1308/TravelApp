@@ -19,4 +19,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noTravelsMessage => 'No trips registered yet.';
+
+  @override
+  String get car => 'Car';
+
+  @override
+  String get motorcycle => 'Motorcycle';
+
+  @override
+  String get bus => 'Bus';
+
+  @override
+  String get plane => 'Plane';
+
+  @override
+  String get cruise => 'Cruise';
+
+  @override
+  String get culture => 'Culture';
+
+  @override
+  String get culinary => 'Culinary';
+
+  @override
+  String get historic => 'Historic';
+
+  @override
+  String get localEstablishments => 'Local Establishments';
+
+  @override
+  String get nature => 'Nature';
 }

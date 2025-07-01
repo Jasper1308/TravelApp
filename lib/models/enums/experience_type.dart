@@ -1,18 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
+
 enum ExperienceType { culture, culinary, historic, localEstablishments, nature }
 
 extension ExperienceTypeExtension on ExperienceType {
-  String get displayString {
+  String intlString(BuildContext context){
+    final locale = AppLocalizations.of(context)!;
     switch (this) {
       case ExperienceType.culture:
-        return 'Cultura';
+        return locale.culture;
       case ExperienceType.culinary:
-        return 'Culinaridade';
+        return locale.culinary;
       case ExperienceType.historic:
-        return 'História';
+        return locale.historic;
       case ExperienceType.localEstablishments:
-        return 'Estabelecimentos Locais';
+        return locale.localEstablishments;
       case ExperienceType.nature:
-        return 'Natureza';
+        return locale.nature;
     }
   }
 }

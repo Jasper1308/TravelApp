@@ -123,6 +123,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No trips registered yet.'**
   String get noTravelsMessage;
+
+  /// No description provided for @car.
+  ///
+  /// In en, this message translates to:
+  /// **'Car'**
+  String get car;
+
+  /// No description provided for @motorcycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Motorcycle'**
+  String get motorcycle;
+
+  /// No description provided for @bus.
+  ///
+  /// In en, this message translates to:
+  /// **'Bus'**
+  String get bus;
+
+  /// No description provided for @plane.
+  ///
+  /// In en, this message translates to:
+  /// **'Plane'**
+  String get plane;
+
+  /// No description provided for @cruise.
+  ///
+  /// In en, this message translates to:
+  /// **'Cruise'**
+  String get cruise;
+
+  /// No description provided for @culture.
+  ///
+  /// In en, this message translates to:
+  /// **'Culture'**
+  String get culture;
+
+  /// No description provided for @culinary.
+  ///
+  /// In en, this message translates to:
+  /// **'Culinary'**
+  String get culinary;
+
+  /// No description provided for @historic.
+  ///
+  /// In en, this message translates to:
+  /// **'Historic'**
+  String get historic;
+
+  /// No description provided for @localEstablishments.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Establishments'**
+  String get localEstablishments;
+
+  /// No description provided for @nature.
+  ///
+  /// In en, this message translates to:
+  /// **'Nature'**
+  String get nature;
 }
 
 class _AppLocalizationsDelegate

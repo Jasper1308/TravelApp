@@ -1,7 +1,17 @@
 {
   "@@locale": "pt",
-  "appTitle": "App de Viagens",
+  "appTitle": "Aplicativo de Viagem",
   "welcomeMessage": "Bem-vindo!",
   "homePageTitle": "Início",
-  "noTravelsMessage": "Nenhuma viagem cadastrada ainda."
+  "noTravelsMessage": "Nenhuma viagem registrada ainda.",
+  "car": "Carro",
+  "motorcycle": "Moto",
+  "bus": "Ônibus",
+  "plane": "Avião",
+  "cruise": "Cruzeiro",
+  "culture": "Cultura",
+  "culinary": "Culinária",
+  "historic": "Histórico",
+  "localEstablishments": "Estabelecimentos Locais",
+  "nature": "Natureza"
 }

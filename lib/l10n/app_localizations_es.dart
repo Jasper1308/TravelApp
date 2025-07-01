@@ -18,5 +18,35 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homePageTitle => 'Inicio';
 
   @override
-  String get noTravelsMessage => 'Ningún viaje registrado aún.';
+  String get noTravelsMessage => 'Aún no hay viajes registrados.';
+
+  @override
+  String get car => 'Coche';
+
+  @override
+  String get motorcycle => 'Moto';
+
+  @override
+  String get bus => 'Autobús';
+
+  @override
+  String get plane => 'Avión';
+
+  @override
+  String get cruise => 'Crucero';
+
+  @override
+  String get culture => 'Cultura';
+
+  @override
+  String get culinary => 'Culinario';
+
+  @override
+  String get historic => 'Histórico';
+
+  @override
+  String get localEstablishments => 'Establecimientos Locales';
+
+  @override
+  String get nature => 'Naturaleza';
 }

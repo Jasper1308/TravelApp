@@ -3,5 +3,15 @@
   "appTitle": "Travel App",
   "welcomeMessage": "Welcome!",
   "homePageTitle": "Home",
-  "noTravelsMessage": "No trips registered yet."
+  "noTravelsMessage": "No trips registered yet.",
+  "car": "Car",
+  "motorcycle": "Motorcycle",
+  "bus": "Bus",
+  "plane": "Plane",
+  "cruise": "Cruise",
+  "culture": "Culture",
+  "culinary": "Culinary",
+  "historic": "Historic",
+  "localEstablishments": "Local Establishments",
+  "nature": "Nature"
 }

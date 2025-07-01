@@ -3,5 +3,15 @@
   "appTitle": "Aplicación de Viajes",
   "welcomeMessage": "¡Bienvenido!",
   "homePageTitle": "Inicio",
-  "noTravelsMessage": "Ningún viaje registrado aún."
+  "noTravelsMessage": "Aún no hay viajes registrados.",
+  "car": "Coche",
+  "motorcycle": "Moto",
+  "bus": "Autobús",
+  "plane": "Avión",
+  "cruise": "Crucero",
+  "culture": "Cultura",
+  "culinary": "Culinario",
+  "historic": "Histórico",
+  "localEstablishments": "Establecimientos Locales",
+  "nature": "Naturaleza"
 }

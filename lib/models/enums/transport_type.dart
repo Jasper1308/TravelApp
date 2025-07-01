@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
+
 enum TransportType{
   car,
   motorcycle,
@@ -7,18 +10,19 @@ enum TransportType{
 }
 
 extension TransportTypeExtension on TransportType {
-  String get displayString{
+  String intlString(BuildContext context){
+    final locale = AppLocalizations.of(context)!;
     switch(this){
       case TransportType.car:
-        return 'Carro';
+        return locale.car;
       case TransportType.motorcycle:
-        return 'Moto';
+        return locale.motorcycle;
       case TransportType.bus:
-        return 'Onibus';
+        return locale.bus;
       case TransportType.plane:
-        return 'Avião';
+        return locale.plane;
       case TransportType.cruise:
-        return 'Cruseiro';
+        return locale.cruise;
     }
   }
 }
