@@ -1,17 +1,23 @@
 class TravelStop {
+  final int travelStopId;
   final String cityName;
-  final String coordinates;
+  final String latitude;
+  final String longitude;
   final DateTime arrivalDate;
   final DateTime departureDate;
   final Duration lenghtStay;
-  //final String description;
+  final String description;
+  final int travelId;
 
   TravelStop({
+    required this.travelStopId,
     required this.cityName,
-    required this.coordinates,
+    required this.latitude,
+    required this.longitude,
     required this.arrivalDate,
     required this.departureDate,
     required this.lenghtStay,
-    //required this.description,
+    required this.description,
+    required this.travelId
   });
 }

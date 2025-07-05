@@ -4,6 +4,7 @@ import 'package:travel_app/models/enums/experience_type.dart';
 import 'package:travel_app/models/enums/transport_type.dart';
 
 class Travel {
+  final String travelId;
   final String name;
   final DateTime initialDate;
   final DateTime endDate;
@@ -13,6 +14,7 @@ class Travel {
   final List<Participant> participants;
 
   Travel({
+    required this.travelId,
     required this.name,
     required this.initialDate,
     required this.endDate,
