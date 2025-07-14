@@ -28,4 +28,6 @@ class TravelTable {
       transportType: travel.transportType.index
     };
   }
+
+
 }

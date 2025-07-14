@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/views/app_root.dart';
+import 'package:travel_app/app_root.dart';
 import 'package:travel_app/views/screens/travel_stop_screen.dart';
 
 import 'controllers/travel_provider.dart';

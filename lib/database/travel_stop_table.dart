@@ -37,9 +37,8 @@ class TravelStopTable {
       longitude: travelStop.longitude,
       arrivalDate: travelStop.arrivalDate,
       departureDate: travelStop.departureDate,
-      lenghtStay: travelStop.lenghtStay,
+      lenghtStay: travelStop.lenghtStay.inMinutes,
       description: travelStop.description,
-      travelId: travelStop.travelId
     };
   }
 }

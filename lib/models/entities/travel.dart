@@ -1,6 +1,5 @@
 import 'package:travel_app/models/entities/participant.dart';
 import 'package:travel_app/models/entities/travel_stop.dart';
-import 'package:travel_app/models/enums/experience_type.dart';
 import 'package:travel_app/models/enums/transport_type.dart';
 
 class Travel {
@@ -9,9 +8,8 @@ class Travel {
   final DateTime initialDate;
   final DateTime endDate;
   final TransportType transportType;
-  final List<ExperienceType> experiences;
-  final List<TravelStop> stops;
-  final List<Participant> participants;
+  List<TravelStop> stops;
+  List<Participant> participants;
 
   Travel({
     required this.travelId,
@@ -19,8 +17,19 @@ class Travel {
     required this.initialDate,
     required this.endDate,
     required this.transportType,
-    required this.experiences,
     required this.stops,
     required this.participants,
   });
+
+  factory Travel.fromMap(Map<String, dynamic> map) {
+    return Travel(
+      travelId: map['travelId'],
+      name: map['name'],
+      initialDate: DateTime.parse(map['initialDate']),
+      endDate: DateTime.parse(map['endDate']),
+      transportType: TransportType.values[map['transportType']],
+      stops: map['stops'] ?? [],
+      participants: map['participants'] ?? [],
+    );
+  }
 }
