@@ -86,19 +86,9 @@ class _TravelStopScreenState extends State<TravelStopScreen> {
                   child: Text('Cadastrar parada'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-
                       Duration stayDuration = _departureDate!.difference(_arrivalDate!);
-                      print(stayDuration);
 
-                      travelState.addStop(
-                        TravelStop(
-                          cityName: _cityController.text,
-                          coordinates: _cordinatesController.text,
-                          arrivalDate: _arrivalDate!,
-                          departureDate: _departureDate!,
-                          lenghtStay: stayDuration,
-                        ),
-                      );
+
                       Navigator.pop(context);
                     }
                   },

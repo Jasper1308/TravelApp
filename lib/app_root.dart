@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/core/theme/app_theme.dart';
 import 'package:travel_app/views/screens/my_travels_screen.dart';
 import 'package:travel_app/views/screens/preferences_screen.dart';
 import 'package:travel_app/views/screens/profile_screen.dart';
@@ -17,8 +18,8 @@ class _AppRootState extends State<AppRoot> {
 
   @override
   void initState() {
-    super.initState();
     pc = PageController(initialPage: selectedRoute);
+    super.initState();
   }
 
   setPage(page) {

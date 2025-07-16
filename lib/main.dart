@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/app_root.dart';
+import 'package:travel_app/controllers/app_preferences_provider.dart';
 import 'package:travel_app/views/screens/travel_stop_screen.dart';
 
 import 'controllers/travel_provider.dart';
@@ -9,7 +10,13 @@ import 'l10n/app_localizations.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(create: (context) => TravelState(), child: MyApp()),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TravelState()),
+        ChangeNotifierProvider(create: (context) => AppPreferencesState())
+      ],
+      child: MyApp(),
+    )
   );
 }
 
