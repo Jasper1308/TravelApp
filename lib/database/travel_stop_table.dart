@@ -6,7 +6,8 @@ class TravelStopTable {
       '''
     CREATE TABLE $tableName(
       $travelStopId INTEGER PRIMARY KEY NOT NULL,
-      $cityName TEXT NOT NULL,
+      $stopOrder INTEGER NOT NULL,
+      $placeName TEXT NOT NULL,
       $latitude REAL NOT NULL,
       $longitude REAL NOT NULL,
       $arrivalDate DATE NOT NULL,
@@ -20,7 +21,8 @@ class TravelStopTable {
 
   static const String tableName = 'travelStop';
   static const String travelStopId = 'travelStopId';
-  static const String cityName = 'cityName';
+  static const String stopOrder = 'stopOrder';
+  static const String placeName = 'placeName';
   static const String latitude = 'latitude';
   static const String longitude = 'longitude';
   static const String arrivalDate = 'arrivalDate';
@@ -32,7 +34,8 @@ class TravelStopTable {
   static Map<String, dynamic> toMap(TravelStop travelStop){
     return{
       travelStopId: travelStop.travelStopId,
-      cityName: travelStop.cityName,
+      stopOrder: travelStop.stopOrder,
+      placeName: travelStop.placeName,
       latitude: travelStop.latitude,
       longitude: travelStop.longitude,
       arrivalDate: travelStop.arrivalDate,

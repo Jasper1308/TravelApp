@@ -2,7 +2,8 @@ import 'package:travel_app/models/enums/experience_type.dart';
 
 class TravelStop {
   final int travelStopId;
-  final String cityName;
+  final int stopOrder;
+  final String placeName;
   final String latitude;
   final String longitude;
   final DateTime arrivalDate;
@@ -11,9 +12,11 @@ class TravelStop {
   final List<ExperienceType> experiences;
   final String description;
 
+
   TravelStop({
     required this.travelStopId,
-    required this.cityName,
+    required this.stopOrder,
+    required this.placeName,
     required this.latitude,
     required this.longitude,
     required this.arrivalDate,
@@ -25,7 +28,8 @@ class TravelStop {
   factory TravelStop.fromMap(Map<String, dynamic> map) {
     return TravelStop(
       travelStopId: map['travelStopId'],
-      cityName: map['cityName'],
+      stopOrder: map['stopOrder'],
+      placeName: map['cityName'],
       latitude: map['latitude'],
       longitude: map['longitude'],
       arrivalDate: DateTime.parse(map['arrivalDate']),

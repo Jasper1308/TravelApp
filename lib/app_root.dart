@@ -63,7 +63,7 @@ class _AppRootState extends State<AppRoot> {
           );
         },
         selectedItemColor: Colors.indigo,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey[800],
         showUnselectedLabels: true,
       ),
     );

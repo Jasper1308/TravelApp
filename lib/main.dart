@@ -1,15 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/app_root.dart';
 import 'package:travel_app/controllers/app_preferences_provider.dart';
 import 'package:travel_app/core/theme/app_theme.dart';
+import 'package:travel_app/firebase_options.dart';
 import 'package:travel_app/views/screens/travel_stop_screen.dart';
 
 import 'controllers/travel_provider.dart';
 import 'l10n/app_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     MultiProvider(
       providers: [
@@ -46,11 +53,7 @@ class MyApp extends StatelessWidget {
       locale: Locale(preferencesState.language),
       supportedLocales: [Locale('en'), Locale('es'), Locale('pt')],
 
-      initialRoute: '/',
-      routes: {
-        '/': (context) => AppRoot(),
-        '/travel_stop': (context) => TravelStopScreen(),
-      },
+      home: ,
     );
   }
 }

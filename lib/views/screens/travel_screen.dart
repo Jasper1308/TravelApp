@@ -86,7 +86,7 @@ class _TravelFormState extends State<TravelForm> {
                   itemBuilder: (context, index) {
                     final stop = travelState.stops[index];
                     return ListTile(
-                      title: Text(stop.cityName),
+                      title: Text(stop.placeName),
                       subtitle: Text(stop.lenghtStay.inDays.toString()),
                       trailing: IconButton(
                           icon: Icon(Icons.delete),

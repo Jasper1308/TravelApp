@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/controllers/travel_provider.dart';
 import 'package:travel_app/models/entities/travel_stop.dart';
+import 'package:travel_app/models/enums/experience_type.dart';
 
 class TravelStopScreen extends StatefulWidget {
   const TravelStopScreen({super.key});
@@ -13,10 +14,11 @@ class TravelStopScreen extends StatefulWidget {
 
 class _TravelStopScreenState extends State<TravelStopScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _placeController = TextEditingController();
   final TextEditingController _cordinatesController = TextEditingController();
   DateTime? _arrivalDate;
   DateTime? _departureDate;
+  List<ExperienceType> selectedExperiences = [];
 
   Future<void> _selectDate(isArrival) async {
     final DateTime? picked = await showDatePicker(
@@ -52,7 +54,7 @@ class _TravelStopScreenState extends State<TravelStopScreen> {
             child: Column(
               children: [
                 TextFormField(
-                  controller: _cityController,
+                  controller: _placeController,
                   decoration: InputDecoration(labelText: 'Cidade'),
                 ),
                 const SizedBox(height: 16.0),
@@ -68,7 +70,7 @@ class _TravelStopScreenState extends State<TravelStopScreen> {
                       child: ElevatedButton(
                         onPressed: () => _selectDate(true),
                         child: Text(
-                          'chegada'
+                          'Chegada'
                         ),
                       ),
                     ),
@@ -76,17 +78,32 @@ class _TravelStopScreenState extends State<TravelStopScreen> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () => _selectDate(false),
-                        child: Text('test'),
+                        child: Text('Saida'),
                       ),
                     ),
                   ],
                 ),
+                const SizedBox(height: 16.0),
+
                 const SizedBox(height: 32.0),
                 ElevatedButton(
                   child: Text('Cadastrar parada'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       Duration stayDuration = _departureDate!.difference(_arrivalDate!);
+                      final stop = TravelStop(
+                          travelStopId: travelState.travels.length,
+                          stopOrder: travelState.stops.length,
+                          placeName: placeName,
+                          latitude: latitude,
+                          longitude: longitude,
+                          arrivalDate: _arrivalDate,
+                          departureDate: _departureDate,
+                          lenghtStay: stayDuration,
+                          experiences: experiences,
+                          description: description
+                      );
+                      travelState.addStop(stop);
 
 
                       Navigator.pop(context);
