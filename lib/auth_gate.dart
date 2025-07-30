@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth, User;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/app_root.dart';
@@ -15,21 +15,16 @@ class AuthGate extends StatelessWidget {
           return SignInScreen(
             providers: [
               EmailAuthProvider(),
-              // Se você adicionou 'firebase_ui_oauth_google', pode adicionar:
-              // GoogleProvider(clientId: 'seu-client-id.apps.googleusercontent.com'),
             ],
             headerBuilder: (context, constraints, shrinkOffset) {
               return Padding(
                 padding: const EdgeInsets.all(20),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: Image.asset('assets/seu_logo.png'), // Opcional: seu logo aqui
-                ),
+                child: Text('header')
               );
             },
             subtitleBuilder: (context, action) {
               return Padding(
-                padding: const EdgeInsets(vertical: 8.0),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: action == AuthAction.signIn
                     ? const Text('Bem-vindo ao seu app de viagem! Faça login para continuar.')
                     : const Text('Crie sua conta para começar a planejar suas aventuras!'),
