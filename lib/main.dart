@@ -4,6 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/auth_gate.dart';
 import 'package:travel_app/controllers/app_preferences_provider.dart';
+import 'package:travel_app/controllers/participant_provider.dart';
+import 'package:travel_app/core/navigation/app_router.dart';
 import 'package:travel_app/core/theme/app_theme.dart';
 import 'package:travel_app/firebase_options.dart';
 import 'controllers/travel_provider.dart';
@@ -19,7 +21,8 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => TravelState()),
-        ChangeNotifierProvider(create: (context) => AppPreferencesState())
+        ChangeNotifierProvider(create: (context) => AppPreferencesState()),
+        ChangeNotifierProvider(create: (context) => ParticipantState()),
       ],
       child: MyApp(),
     )
@@ -52,6 +55,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: [Locale('en'), Locale('es'), Locale('pt')],
 
       home: AuthGate(),
+      routes: AppRouter.routes
+
     );
   }
 }

@@ -8,7 +8,7 @@ class DateInputField extends StatefulWidget {
   final DateTime? firstDate;
   final DateTime? lastDate;
 
-  DateInputField({
+  const DateInputField({
     super.key,
     required this.label,
     required this.onDateSelected,

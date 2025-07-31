@@ -87,25 +87,7 @@ class _TravelStopScreenState extends State<TravelStopScreen> {
                 ElevatedButton(
                   child: Text('Cadastrar parada'),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Duration stayDuration = _departureDate!.difference(_arrivalDate!);
-                      final stop = TravelStop(
-                          travelStopId: travelState.travels.length,
-                          stopOrder: travelState.stops.length,
-                          placeName: placeName,
-                          latitude: latitude,
-                          longitude: longitude,
-                          arrivalDate: _arrivalDate,
-                          departureDate: _departureDate,
-                          lenghtStay: stayDuration,
-                          experiences: experiences,
-                          description: description
-                      );
-                      travelState.addStop(stop);
-
-
-                      Navigator.pop(context);
-                    }
+                    Navigator.pop(context);
                   },
                 ),
               ],

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/controllers/participant_provider.dart';
+import 'package:travel_app/domain/entities/participant.dart';
+import 'package:travel_app/presentation/widgets/date_input_field.dart';
 
 class ParticipantRegister extends StatefulWidget {
   const ParticipantRegister({super.key});
@@ -15,7 +17,7 @@ class ParticipantRegister extends StatefulWidget {
 class _ParticipantRegisterState extends State<ParticipantRegister> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _ageController = TextEditingController();
+  DateTime? _birthdate;
   File? _imageFile;
 
   Future<void> _pickImage() async {
@@ -59,9 +61,27 @@ class _ParticipantRegisterState extends State<ParticipantRegister> {
               }
             ),
             const SizedBox(height: 20),
-            TextFormField(
-
-            )
+            DateInputField(
+                label: 'Data de nascimento',
+                onDateSelected: (date) {
+                  _birthdate = date;
+                }
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    final participant = Participant(
+                      name: _nameController.text,
+                      birthdate: _birthdate!,
+                      photoPath: _imageFile!.path,
+                    );
+                    participantState.addParticipant(participant);
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text('Cadastrar')
+            ),
           ],
         ),
       ),

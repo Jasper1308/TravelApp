@@ -5,7 +5,7 @@ class TravelStopTable {
   static const String createTable =
       '''
     CREATE TABLE $tableName(
-      $travelStopId INTEGER PRIMARY KEY NOT NULL,
+      $travelStopId INTEGER PRIMARY KEY AUTOINCREMENT,
       $stopOrder INTEGER NOT NULL,
       $placeName TEXT NOT NULL,
       $latitude REAL NOT NULL,

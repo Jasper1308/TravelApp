@@ -4,7 +4,7 @@ class TravelTable {
   static const String createTable =
       '''
     CREATE TABLE $tableName(
-      $travelId INTEGER PRIMARY KEY NOT NULL,
+      $travelId INTEGER PRIMARY KEY AUTOINCREMENT,
       $name TEXT NOT NULL,
       $initialDate DATE NOT NULL,
       $endDate DATE NOT NULL,

@@ -1,13 +1,13 @@
 class Participant {
-  final String participantId;
+  final String? participantId;
   final String name;
-  final String age;
+  final DateTime birthdate;
   final String photoPath;
 
   Participant({
-    required this.participantId,
+    this.participantId,
     required this.name,
-    required this.age,
+    required this.birthdate,
     required this.photoPath,
   });
 
@@ -15,7 +15,7 @@ class Participant {
     return Participant(
       participantId: map['participantId'],
       name: map['name'],
-      age: map['age'],
+      birthdate: DateTime.parse(map['birthdate']),
       photoPath: map['photoPath']
     );
   }
