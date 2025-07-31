@@ -6,10 +6,10 @@ import 'package:travel_app/database/travel_participant_table.dart';
 import 'package:travel_app/database/travel_stop_table.dart';
 import 'package:travel_app/database/travel_table.dart';
 import 'package:travel_app/database/database.dart';
-import 'package:travel_app/models/entities/participant.dart';
-import 'package:travel_app/models/entities/travel.dart';
-import 'package:travel_app/models/entities/travel_stop.dart';
-import 'package:travel_app/models/enums/experience_type.dart';
+import 'package:travel_app/domain/entities/participant.dart';
+import 'package:travel_app/domain/entities/travel.dart';
+import 'package:travel_app/domain/entities/travel_stop.dart';
+import 'package:travel_app/domain/enums/experience_type.dart';
 
 class TravelController {
   Future<void> insert(Travel travel) async {

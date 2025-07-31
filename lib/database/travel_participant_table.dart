@@ -1,6 +1,6 @@
 import 'package:travel_app/database/participant_table.dart';
 import 'package:travel_app/database/travel_table.dart';
-import 'package:travel_app/models/entities/participant.dart';
+import 'package:travel_app/domain/entities/participant.dart';
 
 class TravelParticipantTable {
   static const String createTable =

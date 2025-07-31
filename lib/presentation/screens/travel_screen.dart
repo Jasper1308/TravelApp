@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/controllers/travel_provider.dart';
-import 'package:travel_app/models/enums/transport_type.dart';
+import 'package:travel_app/domain/enums/transport_type.dart';
 
 class TravelForm extends StatefulWidget {
   const TravelForm({super.key});
@@ -78,22 +78,6 @@ class _TravelFormState extends State<TravelForm> {
                       ),
                     ),
                   ],
-                ),
-                const SizedBox(height: 32.0),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: travelState.stops.length,
-                  itemBuilder: (context, index) {
-                    final stop = travelState.stops[index];
-                    return ListTile(
-                      title: Text(stop.placeName),
-                      subtitle: Text(stop.lenghtStay.inDays.toString()),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => travelState.removeStop
-                      ),
-                    );
-                  },
                 ),
                 const SizedBox(height: 32.0),
                 ElevatedButton(

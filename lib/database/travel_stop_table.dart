@@ -1,5 +1,5 @@
 import 'package:travel_app/database/travel_table.dart';
-import 'package:travel_app/models/entities/travel_stop.dart';
+import 'package:travel_app/domain/entities/travel_stop.dart';
 
 class TravelStopTable {
   static const String createTable =

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/l10n/app_localizations.dart';
-import 'package:travel_app/models/entities/travel.dart';
+import 'package:travel_app/domain/entities/travel.dart';
 
 class MyTravelsScreen extends StatefulWidget {
   const MyTravelsScreen({super.key});

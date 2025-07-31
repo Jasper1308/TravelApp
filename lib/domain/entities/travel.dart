@@ -1,6 +1,6 @@
-import 'package:travel_app/models/entities/participant.dart';
-import 'package:travel_app/models/entities/travel_stop.dart';
-import 'package:travel_app/models/enums/transport_type.dart';
+import 'package:travel_app/domain/entities/participant.dart';
+import 'package:travel_app/domain/entities/travel_stop.dart';
+import 'package:travel_app/domain/enums/transport_type.dart';
 
 class Travel {
   final String travelId;

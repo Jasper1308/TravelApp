@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/controllers/travel_provider.dart';
-import 'package:travel_app/models/entities/travel_stop.dart';
-import 'package:travel_app/models/enums/experience_type.dart';
+import 'package:travel_app/domain/entities/travel_stop.dart';
+import 'package:travel_app/domain/enums/experience_type.dart';
 
 class TravelStopScreen extends StatefulWidget {
   const TravelStopScreen({super.key});
@@ -83,8 +83,6 @@ class _TravelStopScreenState extends State<TravelStopScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16.0),
-
                 const SizedBox(height: 32.0),
                 ElevatedButton(
                   child: Text('Cadastrar parada'),

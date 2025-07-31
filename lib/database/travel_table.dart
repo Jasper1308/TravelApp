@@ -1,4 +1,4 @@
-import 'package:travel_app/models/entities/travel.dart';
+import 'package:travel_app/domain/entities/travel.dart';
 
 class TravelTable {
   static const String createTable =

@@ -1,4 +1,4 @@
-import 'package:travel_app/models/entities/participant.dart';
+import 'package:travel_app/domain/entities/participant.dart';
 
 class ParticipantTable {
   static const String createTable =
@@ -7,7 +7,7 @@ class ParticipantTable {
       $participantId INTEGER PRIMARY KEY NOT NULL,
       $name TEXT NOT NULL,
       $age TEXT NOT NULL,
-      $photoPath TEXT NOT NULL,
+      $photoPath TEXT NOT NULL
     );
   ''';
 

@@ -1,4 +1,4 @@
-import 'package:travel_app/models/enums/experience_type.dart';
+import 'package:travel_app/domain/enums/experience_type.dart';
 
 class TravelStop {
   final int travelStopId;
