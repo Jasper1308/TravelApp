@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/controllers/participant_provider.dart';
+import 'package:travel_app/providers/participant_provider.dart';
 import 'package:travel_app/domain/entities/participant.dart';
 import 'package:travel_app/presentation/widgets/date_input_field.dart';
 
@@ -37,52 +37,55 @@ class _ParticipantRegisterState extends State<ParticipantRegister> {
       appBar: AppBar(
         title: Text('Registro de participantes'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: _pickImage,
-              child: CircleAvatar(
-                backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
-                radius: 50,
-                child: _imageFile == null ? Icon(Icons.camera_alt) : null,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: _pickImage,
+                child: CircleAvatar(
+                  backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
+                  radius: 50,
+                  child: _imageFile == null ? Icon(Icons.camera_alt) : null,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Nome'),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Por favor, insira um nome';
-                }
-              }
-            ),
-            const SizedBox(height: 20),
-            DateInputField(
-                label: 'Data de nascimento',
-                onDateSelected: (date) {
-                  _birthdate = date;
-                }
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    final participant = Participant(
-                      name: _nameController.text,
-                      birthdate: _birthdate!,
-                      photoPath: _imageFile!.path,
-                    );
-                    participantState.addParticipant(participant);
-                    Navigator.pop(context);
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'Nome'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, insira um nome';
                   }
-                },
-                child: Text('Cadastrar')
-            ),
-          ],
+                }
+              ),
+              const SizedBox(height: 20),
+              DateInputField(
+                  label: 'Data de nascimento',
+                  onDateSelected: (date) {
+                    _birthdate = date;
+                  }
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      final participant = Participant(
+                        name: _nameController.text,
+                        birthdate: _birthdate!,
+                        photoPath: _imageFile!.path,
+                      );
+                      participantState.addParticipant(participant);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Text('Cadastrar')
+              ),
+            ],
+          ),
         ),
       ),
     );

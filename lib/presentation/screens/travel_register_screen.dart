@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/controllers/travel_provider.dart';
+import 'package:travel_app/providers/travel_provider.dart';
 import 'package:travel_app/domain/enums/transport_type.dart';
 import 'package:travel_app/presentation/widgets/date_input_field.dart';
 
@@ -101,7 +101,7 @@ class _TravelFormState extends State<TravelForm> {
                   ElevatedButton(
                     child: Text('Cadastrar parada'),
                     onPressed: () =>
-                        Navigator.pushNamed(context, '/travel-stop'),
+                        Navigator.pushNamed(context, '/travel-stop-register'),
                   ),
                 ],
               ),

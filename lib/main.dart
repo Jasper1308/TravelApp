@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/auth_gate.dart';
-import 'package:travel_app/controllers/app_preferences_provider.dart';
-import 'package:travel_app/controllers/participant_provider.dart';
+import 'package:travel_app/providers/app_preferences_provider.dart';
+import 'package:travel_app/providers/participant_provider.dart';
 import 'package:travel_app/core/navigation/app_router.dart';
 import 'package:travel_app/core/theme/app_theme.dart';
 import 'package:travel_app/firebase_options.dart';
-import 'controllers/travel_provider.dart';
+import 'providers/travel_provider.dart';
 import 'l10n/app_localizations.dart';
 
 void main() async {

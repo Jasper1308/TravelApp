@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/constants/languages.dart';
-import 'package:travel_app/controllers/app_preferences_provider.dart';
+import 'package:travel_app/core/constants/languages.dart';
+import 'package:travel_app/providers/app_preferences_provider.dart';
 
 class PreferencesScreen extends StatefulWidget {
   const PreferencesScreen({super.key});
