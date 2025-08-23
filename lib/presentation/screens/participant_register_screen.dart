@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/providers/participant_provider.dart';
+import 'package:travel_app/presentation/providers/participant_provider.dart';
 import 'package:travel_app/domain/entities/participant.dart';
 import 'package:travel_app/presentation/widgets/date_input_field.dart';
 

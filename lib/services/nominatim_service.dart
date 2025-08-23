@@ -20,9 +20,6 @@ class NominatimService {
 
     return searchResult;
 
-    // return searchResult.map((r) {
-    //   return LatLng(double.parse(r.lat!), double.parse(r.lon!));
-    // }).toList();
   }
 
   static Future<NominatimResponse> reverseGeocode(LatLng position) async {

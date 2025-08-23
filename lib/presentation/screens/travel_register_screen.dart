@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/providers/travel_provider.dart';
+import 'package:travel_app/domain/entities/participant.dart';
+import 'package:travel_app/domain/entities/travel.dart';
+import 'package:travel_app/domain/entities/travel_stop.dart';
+import 'package:travel_app/presentation/providers/participant_provider.dart';
+import 'package:travel_app/presentation/providers/travel_provider.dart';
 import 'package:travel_app/domain/enums/transport_type.dart';
 import 'package:travel_app/presentation/widgets/date_input_field.dart';
 
@@ -18,13 +24,11 @@ class _TravelFormState extends State<TravelForm> {
   final TextEditingController _travelNameController = TextEditingController();
   DateTime? _initialDate;
   DateTime? _endDate;
-  final TextEditingController _experiencesController = TextEditingController();
-  final TextEditingController _stopsController = TextEditingController();
-  final TextEditingController _participantsController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final travelState = Provider.of<TravelState>(context);
+    final participantState = Provider.of<ParticipantState>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Formulário de Viagem'),
@@ -91,17 +95,86 @@ class _TravelFormState extends State<TravelForm> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    child: Text('Cadastrar Participante'),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/participant-register'),
+
+                  const SizedBox(height: 32.0),
+
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8,
+                        children: [
+                          if (participantState.participants.isNotEmpty)
+                            ...participantState.participants.map(
+                              (participant) => CircleAvatar(
+                                backgroundImage: FileImage(
+                                  File(participant.photoPath),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      ElevatedButton(
+                        child: Text('Cadastrar Participante'),
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          '/participant-register',
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16.0),
+
+                  const SizedBox(height: 32.0),
+
+                  SizedBox(
+                    height: 300,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(),
+                      ),
+                      child: Column(
+                        children: [
+                          if (travelState.stops.isNotEmpty)
+                            ...travelState.stops.map(
+                              (stop) => Card(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Local: ${stop.placeName}'),
+                                    Text('Saída: ${stop.departureDate}'),
+                                    Text('Chegada: ${stop.arrivalDate}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ElevatedButton(
+                            child: Text('Cadastrar parada'),
+                            onPressed: () => Navigator.pushNamed(
+                              context,
+                              '/travel-stop-register',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   ElevatedButton(
-                    child: Text('Cadastrar parada'),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/travel-stop-register'),
+                    onPressed: () {
+                      travelState.addTravel(
+                        Travel(
+                          travelId: 0,
+                          name: _travelNameController.text,
+                          initialDate: _initialDate!,
+                          endDate: _endDate!,
+                          transportType: _transportType,
+                          stops: travelState.stops,
+                          participants: participantState.participants,
+                        ),
+                      );
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cadastrar viagem'),
                   ),
                 ],
               ),

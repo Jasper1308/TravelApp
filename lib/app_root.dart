@@ -12,7 +12,7 @@ class AppRoot extends StatefulWidget {
 }
 
 class _AppRootState extends State<AppRoot> {
-  int selectedRoute = 0;
+  int selectedRoute = 1;
   late PageController pc;
 
   @override
@@ -34,21 +34,19 @@ class _AppRootState extends State<AppRoot> {
         controller: pc,
         onPageChanged: setPage,
         children: [
-          MyTravelsScreen(),
-          TravelForm(),
           ProfileScreen(),
+          MyTravelsScreen(),
           PreferencesScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedRoute,
         items: [
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Minhas Viagens',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Nova Viagem'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Preferências',

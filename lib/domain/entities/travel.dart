@@ -3,7 +3,7 @@ import 'package:travel_app/domain/entities/travel_stop.dart';
 import 'package:travel_app/domain/enums/transport_type.dart';
 
 class Travel {
-  final String travelId;
+  final int travelId;
   final String name;
   final DateTime initialDate;
   final DateTime endDate;

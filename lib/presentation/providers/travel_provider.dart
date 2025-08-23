@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/domain/entities/travel.dart';
 import 'package:travel_app/domain/entities/travel_stop.dart';
+import 'package:travel_app/repository/travel_repository.dart';
 
 class TravelState extends ChangeNotifier{
-  final List<Travel> travels = [];
+  List<Travel> travels = [];
   final List<TravelStop> stops = [];
+
 
   void addStop(TravelStop stop){
     stops.add(stop);
@@ -17,12 +19,20 @@ class TravelState extends ChangeNotifier{
   }
 
   void addTravel(Travel travel){
+    travel.stops = stops;
+    stops.clear();
     travels.add(travel);
+    TravelController().insert(travel);
     notifyListeners();
   }
 
   void removeTravel(Travel travel){
     travels.remove(travel);
+    notifyListeners();
+  }
+
+  void listTravel() async {
+    travels = await TravelController().list();
     notifyListeners();
   }
 }

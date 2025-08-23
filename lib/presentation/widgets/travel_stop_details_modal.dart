@@ -6,7 +6,7 @@ import 'package:travel_app/presentation/widgets/experience_type_selector.dart';
 
 class TravelStopDetailsModal extends StatefulWidget {
   final LatLng? initialPosition;
-  final Function()? addStop;
+  final Function(DateTime, DateTime, String, List<ExperienceType>)? addStop;
 
   const TravelStopDetailsModal({super.key, this.initialPosition, this.addStop});
 
@@ -17,7 +17,14 @@ class TravelStopDetailsModal extends StatefulWidget {
 class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
   DateTime? _arrivalDate;
   DateTime? _departureDate;
+  final TextEditingController descriptionController = TextEditingController();
   List<ExperienceType> selectedExperiences = [];
+
+  void addStop(DateTime arrivalDate, DateTime departureDate, String description, List<ExperienceType> experiences){
+    if(widget.addStop != null){
+      widget.addStop?.call(arrivalDate, departureDate, description, experiences);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +69,13 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
               const SizedBox(height: 16.0),
               ExperienceTypeSelector(
                 selectedExperiences: [],
-                onExperiencesSelected: (experiences) {},
+                onExperiencesSelected: (experiences) {
+                  selectedExperiences = experiences;
+                },
               ),
               const SizedBox(height: 16.0),
               TextFormField(
+                controller: descriptionController,
                 decoration: const InputDecoration(
                   labelText: 'Descrição',
                   border: OutlineInputBorder(),
@@ -73,9 +83,7 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
                 maxLines: 5,
               ),
               ElevatedButton(
-                onPressed: () {
-                  widget.addStop?.call();
-                },
+                onPressed: () => addStop(_arrivalDate!, _departureDate!, descriptionController.text, selectedExperiences),
                 child: Text('Adicionar'),
               ),
             ],

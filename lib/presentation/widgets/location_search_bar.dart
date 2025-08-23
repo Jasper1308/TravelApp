@@ -21,7 +21,9 @@ class _LocationSearchBarState extends State<LocationSearchBar> {
     setState(() {
       _loading = true;
     });
-    final response = await NominatimService.searchPlaces(_searchController.text);
+    final response = await NominatimService.searchPlaces(
+      _searchController.text,
+    );
     setState(() {
       _results = response;
       _loading = false;
@@ -77,10 +79,15 @@ class _LocationSearchBarState extends State<LocationSearchBar> {
                   itemCount: _results.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(_results[index].displayName.toString(), style: const TextStyle(color: Colors.black),),
+                      title: Text(
+                        _results[index].displayName.toString(),
+                        style: const TextStyle(color: Colors.black),
+                      ),
                       onTap: () {
-                        final lat = double.tryParse(_results[index].lat ?? '0') ?? 0;
-                        final lon = double.tryParse(_results[index].lon ?? '0') ?? 0;
+                        final lat =
+                            double.tryParse(_results[index].lat ?? '0') ?? 0;
+                        final lon =
+                            double.tryParse(_results[index].lon ?? '0') ?? 0;
                         widget.onPlaceSelected(LatLng(lat, lon));
                         setState(() {
                           _results.clear();
