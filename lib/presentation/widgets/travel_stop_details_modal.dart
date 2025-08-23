@@ -1,45 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:travel_app/domain/enums/experience_type.dart';
 import 'package:travel_app/presentation/widgets/date_input_field.dart';
+import 'package:travel_app/presentation/widgets/experience_type_selector.dart';
 
 class TravelStopDetailsModal extends StatefulWidget {
-  final LatLng selectedCordinates;
+  final LatLng? initialPosition;
+  final Function()? addStop;
 
-  const TravelStopDetailsModal({super.key, required this.selectedCordinates});
+  const TravelStopDetailsModal({super.key, this.initialPosition, this.addStop});
 
   @override
   State<TravelStopDetailsModal> createState() => _TravelStopDetailsModalState();
 }
 
 class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
+  DateTime? _arrivalDate;
+  DateTime? _departureDate;
+  List<ExperienceType> selectedExperiences = [];
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: 16.0,
-          right: 16.0,
-          top: 16.0,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                DateInputField(label: 'chegada', onDateSelected: (date) {}),
-                DateInputField(label: 'saida', onDateSelected: (date) {}),
-              ],
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Descrição',
-                border: OutlineInputBorder(),
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            top: 16.0,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16.0,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: DateInputField(
+                      label: 'chegada',
+                      onDateSelected: (date) {
+                        setState(() {
+                          _arrivalDate = date;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16.0),
+                  Expanded(
+                    child: DateInputField(
+                      label: 'saida',
+                      onDateSelected: (date) {
+                        setState(() {
+                          _departureDate = date;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
-              maxLines: 5,
-            ),
-            ElevatedButton(onPressed: () {}, child: Text('Adicionar')),
-          ],
+              const SizedBox(height: 16.0),
+              ExperienceTypeSelector(
+                selectedExperiences: [],
+                onExperiencesSelected: (experiences) {},
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Descrição',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 5,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  widget.addStop?.call();
+                },
+                child: Text('Adicionar'),
+              ),
+            ],
+          ),
         ),
       ),
     );

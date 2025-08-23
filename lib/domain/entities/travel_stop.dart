@@ -1,11 +1,11 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_app/domain/enums/experience_type.dart';
 
 class TravelStop {
   final int travelStopId;
   final int stopOrder;
   final String placeName;
-  final String latitude;
-  final String longitude;
+  final LatLng cordinates;
   final DateTime arrivalDate;
   final DateTime departureDate;
   final Duration lenghtStay;
@@ -17,8 +17,7 @@ class TravelStop {
     required this.travelStopId,
     required this.stopOrder,
     required this.placeName,
-    required this.latitude,
-    required this.longitude,
+    required this.cordinates,
     required this.arrivalDate,
     required this.departureDate,
     required this.lenghtStay,
