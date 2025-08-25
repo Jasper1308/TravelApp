@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nominatim_flutter/model/response/nominatim_response.dart';
@@ -16,6 +18,21 @@ class _LocationSearchBarState extends State<LocationSearchBar> {
   final TextEditingController _searchController = TextEditingController();
   List<NominatimResponse> _results = [];
   bool _loading = false;
+  Timer? _debounce;
+
+  void _onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (_searchController.text.isNotEmpty) {
+        _search();
+      } else {
+        setState(() {
+          _results.clear();
+        });
+      }
+    });
+  }
 
   void _search() async {
     setState(() {
@@ -28,6 +45,13 @@ class _LocationSearchBarState extends State<LocationSearchBar> {
       _results = response;
       _loading = false;
     });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -54,15 +78,7 @@ class _LocationSearchBarState extends State<LocationSearchBar> {
                         hintText: 'Pesquisar',
                         border: InputBorder.none,
                       ),
-                      onChanged: (value) {
-                        if (value.isNotEmpty) {
-                          _search();
-                        } else {
-                          setState(() {
-                            _results.clear();
-                          });
-                        }
-                      },
+                      onChanged: (_) => _onSearchChanged(),
                     ),
                   ),
                   if (_loading) const CircularProgressIndicator(),
