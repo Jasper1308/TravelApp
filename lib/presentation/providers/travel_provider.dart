@@ -36,4 +36,13 @@ class TravelState extends ChangeNotifier{
     travels = await TravelController().list();
     notifyListeners();
   }
+
+  void updateStopOrder(int oldIndex, int newIndex){
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
+    final TravelStop movedStop = stops.removeAt(oldIndex);
+    stops.insert(newIndex, movedStop);
+    notifyListeners();
+  }
 }

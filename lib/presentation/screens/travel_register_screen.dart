@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/domain/entities/participant.dart';
 import 'package:travel_app/domain/entities/travel.dart';
-import 'package:travel_app/domain/entities/travel_stop.dart';
 import 'package:travel_app/presentation/providers/participant_provider.dart';
 import 'package:travel_app/presentation/providers/travel_provider.dart';
 import 'package:travel_app/domain/enums/transport_type.dart';
 import 'package:travel_app/presentation/widgets/date_input_field.dart';
+import 'package:travel_app/presentation/widgets/register_button.dart';
+import 'package:travel_app/presentation/widgets/stop_list.dart';
 
 class TravelForm extends StatefulWidget {
   const TravelForm({super.key});
@@ -114,12 +114,12 @@ class _TravelFormState extends State<TravelForm> {
                             ),
                         ],
                       ),
-                      ElevatedButton(
-                        child: Text('Cadastrar Participante'),
+                      RegisterButton(
                         onPressed: () => Navigator.pushNamed(
                           context,
                           '/participant-register',
                         ),
+                        text: 'Cadastrar Participante',
                       ),
                     ],
                   ),
@@ -133,33 +133,11 @@ class _TravelFormState extends State<TravelForm> {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(),
                       ),
-                      child: Column(
-                        children: [
-                          if (travelState.stops.isNotEmpty)
-                            ...travelState.stops.map(
-                              (stop) => Card(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Local: ${stop.placeName}'),
-                                    Text('Saída: ${stop.departureDate}'),
-                                    Text('Chegada: ${stop.arrivalDate}'),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ElevatedButton(
-                            child: Text('Cadastrar parada'),
-                            onPressed: () => Navigator.pushNamed(
-                              context,
-                              '/travel-stop-register',
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: StopList(),
                     ),
                   ),
-                  ElevatedButton(
+
+                  RegisterButton(
                     onPressed: () {
                       travelState.addTravel(
                         Travel(
@@ -174,7 +152,7 @@ class _TravelFormState extends State<TravelForm> {
                       );
                       Navigator.pop(context);
                     },
-                    child: Text('Cadastrar viagem'),
+                    text: 'Cadastrar viagem',
                   ),
                 ],
               ),
