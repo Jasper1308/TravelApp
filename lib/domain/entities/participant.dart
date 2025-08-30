@@ -1,11 +1,11 @@
 class Participant {
-  final String? participantId;
+  int participantId;
   final String name;
   final DateTime birthdate;
   final String photoPath;
 
   Participant({
-    this.participantId,
+    required this.participantId,
     required this.name,
     required this.birthdate,
     required this.photoPath,

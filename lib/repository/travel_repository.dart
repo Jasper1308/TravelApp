@@ -17,7 +17,9 @@ class TravelController {
 
     await db.transaction((txn) async {
       final travelMap = TravelTable.toMap(travel);
-      await txn.insert(TravelTable.tableName, travelMap);
+      final travelId = await txn.insert(TravelTable.tableName, travelMap);
+      travel.travelId = travelId;
+
       await _insertParticipant(txn, travel);
       await _insertStop(txn, travel);
     });
@@ -26,7 +28,8 @@ class TravelController {
   Future<void> _insertParticipant(DatabaseExecutor txn, Travel travel) async {
     for (final participant in travel.participants) {
       final participantMap = ParticipantTable.toMap(participant);
-      await txn.insert(ParticipantTable.tableName, participantMap);
+      final participantId = await txn.insert(ParticipantTable.tableName, participantMap);
+      participant.participantId = participantId;
 
       final travelParticipantMap = {
         TravelParticipantTable.participantId: participant.participantId,
@@ -41,6 +44,9 @@ class TravelController {
     for (final stop in travel.stops) {
       final stopMap = TravelStopTable.toMap(stop);
       stopMap[TravelStopTable.travelId] = travel.travelId;
+      final stopId = await txn.insert(TravelStopTable.tableName, stopMap);
+      stop.travelStopId = stopId;
+
       await txn.insert(TravelStopTable.tableName, stopMap);
       for (final experience in stop.experiences) {
         final experienceMap = ExperiencesTable.toMap(experience);

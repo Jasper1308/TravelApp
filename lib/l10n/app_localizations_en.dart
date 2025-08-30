@@ -49,4 +49,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nature => 'Nature';
+
+  @override
+  String get dateFormat => 'MM/dd/yyyy';
 }

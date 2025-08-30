@@ -74,6 +74,7 @@ class _ParticipantRegisterState extends State<ParticipantRegister> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       final participant = Participant(
+                        participantId: 0,
                         name: _nameController.text,
                         birthdate: _birthdate!,
                         photoPath: _imageFile!.path,

@@ -10,6 +10,7 @@ class TravelState extends ChangeNotifier{
 
   void addStop(TravelStop stop){
     stops.add(stop);
+
     notifyListeners();
   }
 

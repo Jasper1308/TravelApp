@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/l10n/app_localizations.dart';
-import 'package:travel_app/domain/entities/travel.dart';
 import 'package:travel_app/presentation/providers/travel_provider.dart';
 import 'package:travel_app/presentation/widgets/travel_card.dart';
 
@@ -13,10 +12,9 @@ class MyTravelsScreen extends StatefulWidget {
 }
 
 class _MyTravelsScreenState extends State<MyTravelsScreen> {
-
   @override
   void initState() {
-    Provider.of<TravelState>(context).listTravel();
+    Provider.of<TravelState>(context, listen: false).listTravel();
     super.initState();
   }
 
@@ -43,11 +41,18 @@ class _MyTravelsScreenState extends State<MyTravelsScreen> {
                 ),
               ),
             )
-          : Expanded(
-              child: ListView.builder(
-                itemCount: travelState.travels.length,
-                itemBuilder: (context, index) =>
-                    TravelCard(travel: travelState.travels[index]),
+          : Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: travelState.travels.length,
+                      itemBuilder: (context, index) =>
+                          TravelCard(travel: travelState.travels[index]),
+                    ),
+                  ),
+                ],
               ),
             ),
       floatingActionButton: FloatingActionButton(

@@ -183,6 +183,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nature'**
   String get nature;
+
+  /// No description provided for @dateFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'MM/dd/yyyy'**
+  String get dateFormat;
 }
 
 class _AppLocalizationsDelegate

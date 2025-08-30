@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/presentation/screens/my_travels_screen.dart';
 import 'package:travel_app/presentation/screens/preferences_screen.dart';
 import 'package:travel_app/presentation/screens/profile_screen.dart';
-import 'package:travel_app/presentation/screens/travel_register_screen.dart';
 
 class AppRoot extends StatefulWidget {
   const AppRoot({super.key});
@@ -21,7 +20,7 @@ class _AppRootState extends State<AppRoot> {
     super.initState();
   }
 
-  setPage(page) {
+  setPage(int page) {
     setState(() {
       selectedRoute = page;
     });

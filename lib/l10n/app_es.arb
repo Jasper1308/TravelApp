@@ -13,5 +13,6 @@
   "culinary": "Culinario",
   "historic": "Histórico",
   "localEstablishments": "Establecimientos Locales",
-  "nature": "Naturaleza"
+  "nature": "Naturaleza",
+  "dateFormat": "dd/MM/yyyy"
 }
