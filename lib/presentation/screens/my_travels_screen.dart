@@ -13,12 +13,6 @@ class MyTravelsScreen extends StatefulWidget {
 
 class _MyTravelsScreenState extends State<MyTravelsScreen> {
   @override
-  void initState() {
-    Provider.of<TravelState>(context, listen: false).listTravel();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
     final travelState = Provider.of<TravelState>(context);

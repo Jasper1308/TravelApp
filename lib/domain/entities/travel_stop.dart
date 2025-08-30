@@ -3,8 +3,8 @@ import 'package:travel_app/domain/enums/experience_type.dart';
 
 class TravelStop {
   int travelStopId;
-  final int stopOrder;
-  final String placeName;
+  int stopOrder;
+  String placeName;
   final LatLng cordinates;
   final DateTime arrivalDate;
   final DateTime departureDate;

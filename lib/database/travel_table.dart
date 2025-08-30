@@ -23,8 +23,8 @@ class TravelTable {
     return {
       travelId: travel.travelId,
       name: travel.name,
-      initialDate: travel.initialDate,
-      endDate: travel.endDate,
+      initialDate: travel.initialDate.toIso8601String(),
+      endDate: travel.endDate.toIso8601String(),
       transportType: travel.transportType.index
     };
   }

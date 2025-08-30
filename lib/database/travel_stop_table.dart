@@ -38,8 +38,8 @@ class TravelStopTable {
       placeName: travelStop.placeName,
       latitude: travelStop.cordinates.latitude,
       longitude: travelStop.cordinates.longitude,
-      arrivalDate: travelStop.arrivalDate,
-      departureDate: travelStop.departureDate,
+      arrivalDate: travelStop.arrivalDate.toIso8601String(),
+      departureDate: travelStop.departureDate.toIso8601String(),
       lenghtStay: travelStop.lenghtStay.inMinutes,
       description: travelStop.description,
     };

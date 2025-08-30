@@ -5,7 +5,8 @@ import 'package:travel_app/domain/entities/travel_stop.dart';
 import 'package:travel_app/presentation/widgets/map_picker.dart';
 import 'package:travel_app/presentation/widgets/travel_stop_details_modal.dart';
 import 'package:travel_app/presentation/providers/travel_provider.dart';
-import 'package:travel_app/domain/enums/experience_type.dart';
+import 'package:travel_app/services/nominatim_service.dart';
+import 'package:travel_app/utils/andress_formatter.dart';
 
 class TravelStopRegisterScreen extends StatefulWidget {
   final TravelStop? stop;
@@ -21,7 +22,7 @@ class TravelStopRegisterScreen extends StatefulWidget {
 }
 
 class _TravelStopRegisterScreenState extends State<TravelStopRegisterScreen> {
-  late final LatLng _cordinates;
+  late LatLng _cordinates;
 
 
   void _showStopDetailsModal() {
@@ -37,13 +38,11 @@ class _TravelStopRegisterScreenState extends State<TravelStopRegisterScreen> {
               listen: false,
             );
 
-
-
             travelState.addStop(
               TravelStop(
                 travelStopId: 0,
                 stopOrder: travelState.travels.length + 1,
-                placeName: 'a',
+                placeName: 'null',
                 cordinates: _cordinates,
                 arrivalDate: arrivalDate,
                 departureDate: departureDate,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/domain/entities/travel.dart';
 import 'package:travel_app/domain/enums/transport_type.dart';
-import 'package:travel_app/utils/dataFormatter.dart';
+import 'package:travel_app/utils/data_formatter.dart';
 
 class TravelCard extends StatelessWidget {
   final Travel travel;

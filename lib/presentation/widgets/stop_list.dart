@@ -27,7 +27,7 @@ class _StopListState extends State<StopList> {
               children: <Widget>[
                 for (final stop in stops)
                   Card(
-                    key: ValueKey(stop.travelStopId),
+                    key: ValueKey(stop.stopOrder),
                     child: SizedBox(height: 80, child: Center(child: Text(stop.placeName))),
                   ),
               ],

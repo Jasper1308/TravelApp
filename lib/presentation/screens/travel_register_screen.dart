@@ -7,6 +7,7 @@ import 'package:travel_app/presentation/providers/participant_provider.dart';
 import 'package:travel_app/presentation/providers/travel_provider.dart';
 import 'package:travel_app/domain/enums/transport_type.dart';
 import 'package:travel_app/presentation/widgets/date_input_field.dart';
+import 'package:travel_app/presentation/widgets/participant_list.dart';
 import 'package:travel_app/presentation/widgets/register_button.dart';
 import 'package:travel_app/presentation/widgets/stop_list.dart';
 
@@ -98,31 +99,7 @@ class _TravelFormState extends State<TravelForm> {
 
                   const SizedBox(height: 32.0),
 
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 8,
-                        children: [
-                          if (participantState.participants.isNotEmpty)
-                            ...participantState.participants.map(
-                              (participant) => CircleAvatar(
-                                backgroundImage: FileImage(
-                                  File(participant.photoPath),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                      RegisterButton(
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          '/participant-register',
-                        ),
-                        text: 'Cadastrar Participante',
-                      ),
-                    ],
-                  ),
+                  ParticipantList(),
 
                   const SizedBox(height: 32.0),
 
@@ -139,7 +116,7 @@ class _TravelFormState extends State<TravelForm> {
 
                   RegisterButton(
                     onPressed: () {
-                      travelState.addTravel(
+                      travelState.createTravel(
                         Travel(
                           travelId: 0,
                           name: _travelNameController.text,

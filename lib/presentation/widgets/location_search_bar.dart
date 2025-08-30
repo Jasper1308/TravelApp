@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nominatim_flutter/model/response/nominatim_response.dart';
 import 'package:travel_app/services/nominatim_service.dart';
+import 'package:travel_app/utils/andress_formatter.dart';
 
 class LocationSearchBar extends StatefulWidget {
   final Function(LatLng position) onPlaceSelected;
@@ -96,7 +97,7 @@ class _LocationSearchBarState extends State<LocationSearchBar> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(
-                        _results[index].displayName.toString(),
+                        formatStopAndress(_results[index].address!),
                         style: const TextStyle(color: Colors.black),
                       ),
                       onTap: () {
