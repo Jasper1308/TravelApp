@@ -14,7 +14,6 @@ class TravelStopRepositoryImpl implements TravelStopRepository {
   ) async {
     for (var stop in stops) {
       final data = Map<String, dynamic>.from(stop.toMap());
-      // garante que o campo experiences seja um JSON string ao gravar
       if (data['experiences'] is! String) {
         data['experiences'] = jsonEncode(data['experiences']);
       }

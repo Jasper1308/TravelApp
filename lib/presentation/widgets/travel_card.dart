@@ -49,7 +49,7 @@ class TravelCard extends StatelessWidget {
                     const Icon(Icons.calendar_today, size: 16),
                     const SizedBox(width: 4),
                     Text(
-                      '\${formatTravelDate(context, travel.initialDate)} - \${formatTravelDate(context, travel.endDate)}',
+                      '${formatTravelDate(context, travel.initialDate)} - ${formatTravelDate(context, travel.endDate)}',
                     ),
                   ],
                 ),
