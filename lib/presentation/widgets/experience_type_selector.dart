@@ -16,7 +16,7 @@ class ExperienceTypeSelector extends StatefulWidget {
 }
 
 class _ExperienceTypeSelectorState extends State<ExperienceTypeSelector> {
-  List<ExperienceType> _selectedExperiences = [];
+  late List<ExperienceType> _selectedExperiences;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _ExperienceTypeSelectorState extends State<ExperienceTypeSelector> {
       } else {
         _selectedExperiences.add(experience);
       }
-      widget.onExperiencesSelected(_selectedExperiences);
+      widget.onExperiencesSelected(List.from(_selectedExperiences));
     });
   }
 

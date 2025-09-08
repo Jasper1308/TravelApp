@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cruise => 'Cruise';
 
   @override
+  String get train => 'Train';
+
+  @override
   String get culture => 'Culture';
 
   @override

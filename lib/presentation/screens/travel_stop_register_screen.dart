@@ -1,58 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/domain/entities/travel_stop.dart';
-import 'package:travel_app/presentation/widgets/map_picker.dart';
+import 'package:travel_app/presentation/providers/travel_register_provider.dart';
+import 'package:travel_app/presentation/widgets/map_screen.dart';
 import 'package:travel_app/presentation/widgets/travel_stop_details_modal.dart';
-import 'package:travel_app/presentation/providers/travel_provider.dart';
 import 'package:travel_app/services/nominatim_service.dart';
-import 'package:travel_app/utils/andress_formatter.dart';
+import 'package:travel_app/utils/address_formatter.dart';
 
 class TravelStopRegisterScreen extends StatefulWidget {
-  final TravelStop? stop;
-
-  const TravelStopRegisterScreen({
-    super.key,
-    this.stop,
-  });
-
+  const TravelStopRegisterScreen({super.key});
   @override
-  State<TravelStopRegisterScreen> createState() =>
-      _TravelStopRegisterScreenState();
+  State<TravelStopRegisterScreen> createState() => _State();
 }
 
-class _TravelStopRegisterScreenState extends State<TravelStopRegisterScreen> {
-  late LatLng _cordinates;
+class _State extends State<TravelStopRegisterScreen> {
+  LatLng? _coords;
+  String? _placeName;
 
+  Future<void> _onMapTap(LatLng coords) async {
+    setState(() {
+      _coords = coords;
+      _placeName = null;
+    });
 
-  void _showStopDetailsModal() {
+    try {
+      final r = await NominatimService.reverseGeocode(coords);
+      if (!mounted) return;
+      setState(() => _placeName = r.address != null ? formatStopAddress(r.address!) : null);
+      if (_placeName != null) {
+        _showModal();
+      }
+    } catch (e) {
+      // log error or show snackbar if appropriate
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao buscar o local: \$e')));
+    }
+  }
+
+  void _showModal() {
+    if (_coords == null) return;
+    final provider = context.read<TravelRegisterProvider>();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (BuildContext context) {
+      builder: (_) {
         return TravelStopDetailsModal(
-          initialPosition: _cordinates,
-          addStop: (arrivalDate, departureDate, description, experiences) {
-            final travelState = Provider.of<TravelState>(
-              context,
-              listen: false,
+          initialPosition: _coords!,
+          arrivalDate: provider.initialDate,
+          departureDate: provider.endDate,
+          addStop: (lengthStay, description, experiences) async {
+            if (_coords == null) return;
+            await context.read<TravelRegisterProvider>().addStopFromCoordinates(
+              _coords!,
+              description: description,
+              lengthStay: lengthStay,
+              experiences: experiences,
+              arrivalDate: provider.initialDate ?? DateTime.now(),
+              departureDate: provider.endDate ?? DateTime.now(),
             );
-
-            travelState.addStop(
-              TravelStop(
-                travelStopId: 0,
-                stopOrder: travelState.travels.length + 1,
-                placeName: 'null',
-                cordinates: _cordinates,
-                arrivalDate: arrivalDate,
-                departureDate: departureDate,
-                lenghtStay: arrivalDate.difference(departureDate),
-                experiences: experiences,
-                description: description,
-              ),
-            );
-            Navigator.pop(context);
-            Navigator.pop(context);
+            if (context.mounted) Navigator.pop(context);
           },
         );
       },
@@ -61,22 +67,10 @@ class _TravelStopRegisterScreenState extends State<TravelStopRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final travelState = Provider.of<TravelState>(context);
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: MapScreen(
-              onMapTap: (coordinates) {
-                setState(() {
-                  _cordinates = coordinates;
-                });
-                _showStopDetailsModal();
-              },
-            ),
-          ),
-        ],
-      ),
+    return Stack(
+      children: [
+        MapScreen(onMapTap: _onMapTap),
+      ],
     );
   }
 }

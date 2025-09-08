@@ -1,13 +1,12 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nominatim_flutter/model/response/nominatim_response.dart';
 import 'package:travel_app/services/nominatim_service.dart';
-import 'package:travel_app/utils/andress_formatter.dart';
+import 'package:travel_app/utils/address_formatter.dart';
 
 class LocationSearchBar extends StatefulWidget {
-  final Function(LatLng position) onPlaceSelected;
+  final Function(LatLng) onPlaceSelected;
 
   const LocationSearchBar({super.key, required this.onPlaceSelected});
 
@@ -16,41 +15,44 @@ class LocationSearchBar extends StatefulWidget {
 }
 
 class _LocationSearchBarState extends State<LocationSearchBar> {
-  final TextEditingController _searchController = TextEditingController();
+  final _controller = TextEditingController();
   List<NominatimResponse> _results = [];
   bool _loading = false;
   Timer? _debounce;
 
-  void _onSearchChanged() {
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
-
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      if (_searchController.text.isNotEmpty) {
+  void _onChanged() {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 400), () {
+      if (_controller.text.isNotEmpty) {
         _search();
       } else {
-        setState(() {
-          _results.clear();
-        });
+        if (mounted) setState(() => _results.clear());
       }
     });
   }
 
-  void _search() async {
-    setState(() {
-      _loading = true;
-    });
-    final response = await NominatimService.searchPlaces(
-      _searchController.text,
-    );
-    setState(() {
-      _results = response;
-      _loading = false;
-    });
+  Future<void> _search() async {
+    if (!mounted) return;
+    setState(() => _loading = true);
+    try {
+      final r = await NominatimService.searchPlaces(_controller.text);
+      if (!mounted) return;
+      setState(() {
+        _results = r;
+        _loading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _results = [];
+        _loading = false;
+      });
+    }
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    _controller.dispose();
     _debounce?.cancel();
     super.dispose();
   }
@@ -63,7 +65,7 @@ class _LocationSearchBarState extends State<LocationSearchBar> {
         child: Column(
           children: [
             Material(
-              color: Colors.white.withValues(alpha: 0.8),
+              color: Color.fromRGBO(255, 255, 255, 0.9),
               elevation: 4,
               borderRadius: BorderRadius.circular(16),
               child: Row(
@@ -74,41 +76,42 @@ class _LocationSearchBarState extends State<LocationSearchBar> {
                   ),
                   Expanded(
                     child: TextField(
-                      controller: _searchController,
+                      controller: _controller,
                       decoration: const InputDecoration(
                         hintText: 'Pesquisar',
                         border: InputBorder.none,
                       ),
-                      onChanged: (_) => _onSearchChanged(),
+                      onChanged: (_) => _onChanged(),
                     ),
                   ),
-                  if (_loading) const CircularProgressIndicator(),
+                  if (_loading)
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 16, height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
                 ],
               ),
             ),
             if (_results.isNotEmpty)
               Material(
-                color: Colors.white.withValues(alpha: 0.8),
+                color: Colors.white,
                 elevation: 4,
                 borderRadius: BorderRadius.circular(16),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: _results.length,
-                  itemBuilder: (context, index) {
+                  itemBuilder: (_, i) {
+                    final res = _results[i];
                     return ListTile(
-                      title: Text(
-                        formatStopAndress(_results[index].address!),
-                        style: const TextStyle(color: Colors.black),
-                      ),
+                      title: Text(formatStopAddress(res.address!)),
                       onTap: () {
-                        final lat =
-                            double.tryParse(_results[index].lat ?? '0') ?? 0;
-                        final lon =
-                            double.tryParse(_results[index].lon ?? '0') ?? 0;
+                        final lat = double.tryParse(res.lat ?? '0') ?? 0;
+                        final lon = double.tryParse(res.lon ?? '0') ?? 0;
                         widget.onPlaceSelected(LatLng(lat, lon));
-                        setState(() {
-                          _results.clear();
-                        });
+                        if (mounted) setState(() => _results.clear());
                       },
                     );
                   },

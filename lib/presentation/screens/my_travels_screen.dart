@@ -1,60 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/l10n/app_localizations.dart';
 import 'package:travel_app/presentation/providers/travel_provider.dart';
 import 'package:travel_app/presentation/widgets/travel_card.dart';
 
-class MyTravelsScreen extends StatefulWidget {
+class MyTravelsScreen extends StatelessWidget {
   const MyTravelsScreen({super.key});
-
-  @override
-  State<MyTravelsScreen> createState() => _MyTravelsScreenState();
-}
-
-class _MyTravelsScreenState extends State<MyTravelsScreen> {
   @override
   Widget build(BuildContext context) {
-    final locale = AppLocalizations.of(context)!;
-    final travelState = Provider.of<TravelState>(context);
+    final provider = context.watch<TravelProvider>();
+    final travels = provider.travels;
     return Scaffold(
-      appBar: AppBar(title: Text(locale.appTitle), centerTitle: true),
-      body: travelState.travels.isEmpty
-          ? Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.travel_explore, size: 56.0),
-                    const SizedBox(height: 16),
-                    Text(
-                      locale.noTravelsMessage,
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: travelState.travels.length,
-                      itemBuilder: (context, index) =>
-                          TravelCard(travel: travelState.travels[index]),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/travel-register');
-        },
-        child: Icon(Icons.add),
+      appBar: AppBar(title: const Text('Minhas Viagens'), centerTitle: true),
+      body: travels.isEmpty
+          ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: const [Icon(Icons.travel_explore, size: 56), SizedBox(height: 12), Text('Nenhuma viagem')]))
+          : ListView.builder(
+        itemCount: travels.length,
+        itemBuilder: (_, i) => TravelCard(travel: travels[i]),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () => Navigator.pushNamed(context, '/travel-register'), child: const Icon(Icons.add)),
     );
   }
 }

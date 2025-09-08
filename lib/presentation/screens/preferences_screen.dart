@@ -3,59 +3,38 @@ import 'package:provider/provider.dart';
 import 'package:travel_app/core/constants/languages.dart';
 import 'package:travel_app/presentation/providers/app_preferences_provider.dart';
 
-class PreferencesScreen extends StatefulWidget {
+class PreferencesScreen extends StatelessWidget {
   const PreferencesScreen({super.key});
 
   @override
-  State<PreferencesScreen> createState() => _PreferencesScreenState();
-}
-
-class _PreferencesScreenState extends State<PreferencesScreen> {
-  @override
   Widget build(BuildContext context) {
-    final preferencesState = Provider.of<AppPreferencesState>(context);
+    final prefs = context.watch<AppPreferencesState>();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Preferências'), centerTitle: true),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Text('Tema'),
-              DropdownButton<ThemeMode>(
-                value: preferencesState.themeMode,
-                items: ThemeMode.values
-                    .map(
-                      (themeMode) => DropdownMenuItem(
-                        value: themeMode,
-                        child: Text(themeMode.toString()),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (ThemeMode? themeMode) {
-                  if (themeMode != null) {
-                    preferencesState.setThemeMode(themeMode);
-                  }
-                },
-              ),
-              Text('Idioma'),
-              DropdownButton<String>(
-                value: preferencesState.language,
-                items: availableLanguages.entries.map((entry) {
-                  return DropdownMenuItem<String>(
-                    value: entry.key,
-                    child: Text(entry.value),
-                  );
-                }).toList(),
-                onChanged: (String? language) {
-                  if (language != null) {
-                    preferencesState.setLanguage(language);
-                  }
-                },
-              ),
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            const Text('Tema'),
+            DropdownButton<ThemeMode>(
+              value: prefs.themeMode,
+              items: ThemeMode.values
+                  .map((t) =>
+                  DropdownMenuItem(value: t, child: Text(t.toString())))
+                  .toList(),
+              onChanged: (mode) => mode != null ? prefs.setThemeMode(mode) : null,
+            ),
+            const SizedBox(height: 16),
+            const Text('Idioma'),
+            DropdownButton<String>(
+              value: prefs.language,
+              items: availableLanguages.entries
+                  .map((e) => DropdownMenuItem(value: e.key, child: Text(e.value)))
+                  .toList(),
+              onChanged: (lang) => lang != null ? prefs.setLanguage(lang) : null,
+            ),
+          ],
         ),
       ),
     );

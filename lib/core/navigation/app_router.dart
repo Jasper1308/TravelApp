@@ -5,8 +5,8 @@ import 'package:travel_app/presentation/screens/travel_stop_register_screen.dart
 
 class AppRouter {
   static Map<String, WidgetBuilder> get routes => {
-    '/participant-register': (context) => const ParticipantRegister(),
+    '/participant-register': (context) => const ParticipantRegisterScreen(),
     '/travel-stop-register': (context) => const TravelStopRegisterScreen(),
-    '/travel-register' : (context) => const TravelForm()
+    '/travel-register' : (context) => const TravelRegisterScreen()
   };
 }

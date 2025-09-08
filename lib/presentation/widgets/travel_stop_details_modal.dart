@@ -1,33 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_app/domain/enums/experience_type.dart';
-import 'package:travel_app/presentation/widgets/date_input_field.dart';
 import 'package:travel_app/presentation/widgets/experience_type_selector.dart';
 
 class TravelStopDetailsModal extends StatefulWidget {
   final LatLng? initialPosition;
-  final Function(DateTime, DateTime, String, List<ExperienceType>)? addStop;
+  final DateTime? arrivalDate;
+  final DateTime? departureDate;
+  final Function(int, String, List<ExperienceType>)? addStop;
 
-  const TravelStopDetailsModal({super.key, this.initialPosition, this.addStop});
+  const TravelStopDetailsModal({
+    super.key,
+    this.initialPosition,
+    this.arrivalDate,
+    this.departureDate,
+    this.addStop,
+  });
 
   @override
   State<TravelStopDetailsModal> createState() => _TravelStopDetailsModalState();
 }
 
 class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
-  DateTime? _arrivalDate;
-  DateTime? _departureDate;
   final TextEditingController descriptionController = TextEditingController();
-  List<ExperienceType> selectedExperiences = [];
+  final TextEditingController lengthStayController = TextEditingController();
+  final ValueNotifier<List<ExperienceType>> selectedExperiencesNotifier =
+      ValueNotifier([]);
 
-  void addStop(DateTime arrivalDate, DateTime departureDate, String description, List<ExperienceType> experiences){
-    if(widget.addStop != null){
-      widget.addStop?.call(arrivalDate, departureDate, description, experiences);
+  @override
+  void initState() {
+    super.initState();
+    lengthStayController.addListener(_onLengthChanged);
+  }
+
+  void _onLengthChanged() {
+    setState(() {});
+  }
+
+  void addStop(
+    int lengthStay,
+    String description,
+    List<ExperienceType> experiences,
+  ) {
+    if (widget.addStop != null) {
+      widget.addStop?.call(lengthStay, description, experiences);
     }
   }
 
   @override
+  void dispose() {
+    descriptionController.dispose();
+    lengthStayController.dispose();
+    selectedExperiencesNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final isAddButtonEnabled = lengthStayController.text.isNotEmpty;
+
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
@@ -41,36 +72,35 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: DateInputField(
-                      label: 'chegada',
-                      onDateSelected: (date) {
-                        setState(() {
-                          _arrivalDate = date;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16.0),
-                  Expanded(
-                    child: DateInputField(
-                      label: 'saida',
-                      onDateSelected: (date) {
-                        setState(() {
-                          _departureDate = date;
-                        });
-                      },
-                    ),
-                  ),
-                ],
+              // show arrival/departure if provided
+              if (widget.arrivalDate != null || widget.departureDate != null)
+                Row(
+                  children: [
+                    if (widget.arrivalDate != null)
+                      Text(
+                        'Chegada: ${widget.arrivalDate!.toLocal().toIso8601String().split('T').first}',
+                      ),
+                    const SizedBox(width: 12),
+                    if (widget.departureDate != null)
+                      Text(
+                        'Saída: ${widget.departureDate!.toLocal().toIso8601String().split('T').first}',
+                      ),
+                  ],
+                ),
+              const SizedBox(height: 12.0),
+              TextFormField(
+                controller: lengthStayController,
+                decoration: const InputDecoration(
+                  labelText: 'Duração (em dias)',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16.0),
               ExperienceTypeSelector(
                 selectedExperiences: [],
                 onExperiencesSelected: (experiences) {
-                  selectedExperiences = experiences;
+                  selectedExperiencesNotifier.value = experiences;
                 },
               ),
               const SizedBox(height: 16.0),
@@ -82,9 +112,16 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
                 ),
                 maxLines: 5,
               ),
+              const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () => addStop(_arrivalDate!, _departureDate!, descriptionController.text, selectedExperiences),
-                child: Text('Adicionar'),
+                onPressed: isAddButtonEnabled
+                    ? () => addStop(
+                        int.tryParse(lengthStayController.text) ?? 0,
+                        descriptionController.text,
+                        selectedExperiencesNotifier.value,
+                      )
+                    : null,
+                child: const Text('Adicionar'),
               ),
             ],
           ),

@@ -12,17 +12,14 @@ class ProfileScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
-                height: 200,
-                width: 200,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/profile.png'),
-                ),
+              const CircleAvatar(
+                radius: 80,
+                backgroundImage: AssetImage('assets/images/profile.png'),
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Nome do Usuário',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ],
           ),

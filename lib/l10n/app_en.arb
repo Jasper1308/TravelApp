@@ -9,6 +9,7 @@
   "bus": "Bus",
   "plane": "Plane",
   "cruise": "Cruise",
+  "train" : "Train",
   "culture": "Culture",
   "culinary": "Culinary",
   "historic": "Historic",

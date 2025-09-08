@@ -154,6 +154,12 @@ abstract class AppLocalizations {
   /// **'Cruise'**
   String get cruise;
 
+  /// No description provided for @train.
+  ///
+  /// In en, this message translates to:
+  /// **'Train'**
+  String get train;
+
   /// No description provided for @culture.
   ///
   /// In en, this message translates to:

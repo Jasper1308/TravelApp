@@ -1,42 +1,31 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/presentation/providers/participant_provider.dart';
 import 'package:travel_app/presentation/widgets/register_button.dart';
 
-class ParticipantList extends StatefulWidget {
+class ParticipantList extends StatelessWidget {
   const ParticipantList({super.key});
 
   @override
-  State<ParticipantList> createState() => _ParticipantListState();
-}
-
-class _ParticipantListState extends State<ParticipantList> {
-  @override
   Widget build(BuildContext context) {
-    final participantState = Provider.of<ParticipantState>(context);
+    final participants = context.watch<ParticipantProvider>().participants;
+
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Wrap(
           spacing: 8,
           children: [
-            if (participantState.participants.isNotEmpty)
-              ...participantState.participants.map(
-                    (participant) => CircleAvatar(
-                  backgroundImage: FileImage(
-                    File(participant.photoPath),
-                  ),
-                ),
+            for (final p in participants)
+              CircleAvatar(
+                backgroundImage: p.photoPath.isNotEmpty ? FileImage(File(p.photoPath)) : null,
+                child: p.photoPath.isEmpty ? Text(p.name.isNotEmpty ? p.name[0] : '?') : null,
               ),
           ],
         ),
+        const SizedBox(height: 12),
         RegisterButton(
-          onPressed: () => Navigator.pushNamed(
-            context,
-            '/participant-register',
-          ),
+          onPressed: () => Navigator.pushNamed(context, '/participant-register'),
           text: 'Cadastrar Participante',
         ),
       ],

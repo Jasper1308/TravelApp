@@ -31,13 +31,15 @@ class TravelCard extends StatelessWidget {
                       size: 28,
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      travel.name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        travel.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
@@ -47,7 +49,7 @@ class TravelCard extends StatelessWidget {
                     const Icon(Icons.calendar_today, size: 16),
                     const SizedBox(width: 4),
                     Text(
-                      '${formatTravelDate(context, travel.initialDate)} - ${formatTravelDate(context, travel.endDate)}',
+                      '\${formatTravelDate(context, travel.initialDate)} - \${formatTravelDate(context, travel.endDate)}',
                     ),
                   ],
                 ),

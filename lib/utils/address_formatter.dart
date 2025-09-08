@@ -1,4 +1,4 @@
-String formatStopAndress(Map<String, dynamic> address){
+String formatStopAddress(Map<String, dynamic> address){
   final addressParts = [];
 
   if (address.containsKey('municipality') && address['municipality'].isNotEmpty) {

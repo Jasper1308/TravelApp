@@ -25,19 +25,23 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _loadCurrentLocation() async {
-    Position position = await LocationService.getCurrentPosition();
-    setState(() {
-      _currentLocation = position;
-    });
+    try {
+      Position position = await LocationService.getCurrentPosition();
+      if (!mounted) return;
+      setState(() {
+        _currentLocation = position;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao obter localização: \$e')));
+    }
   }
 
   void _onMapTap(LatLng position) {
     setState(() {
       _selectedLocation = position;
     });
-    if (widget.onMapTap != null) {
-      widget.onMapTap?.call(position);
-    }
+    widget.onMapTap?.call(position);
   }
 
   @override
@@ -70,19 +74,22 @@ class _MapScreenState extends State<MapScreen> {
                 ),
             },
           ),
-          LocationSearchBar(
-            onPlaceSelected: (position) {
-              setState(() {
+          Positioned(
+            top: 8,
+            left: 8,
+            right: 8,
+            child: LocationSearchBar(
+              onPlaceSelected: (position) {
                 _googleMapController?.animateCamera(
                   CameraUpdate.newCameraPosition(
                     CameraPosition(
                       target: LatLng(position.latitude, position.longitude),
-                      zoom: 15
+                      zoom: 15,
                     ),
                   ),
                 );
-              });
-            },
+              },
+            ),
           ),
         ],
       ),

@@ -18,8 +18,7 @@ extension TransportTypeExtension on TransportType {
       case TransportType.cruise:
         return locale.cruise;
       case TransportType.train:
-        // TODO implement train
-        return 'trem';
+        return locale.train;
     }
   }
 
