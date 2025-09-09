@@ -11,12 +11,21 @@ class MyTravelsScreen extends StatefulWidget {
 }
 
 class _MyTravelsScreenState extends State<MyTravelsScreen> {
+  bool _isInitialLoad = true;
+
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInitialLoad) {
       context.read<TravelProvider>().loadTravels();
-    });
+      _isInitialLoad = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    _isInitialLoad = true;
+    super.dispose();
   }
 
   @override
@@ -28,19 +37,30 @@ class _MyTravelsScreenState extends State<MyTravelsScreen> {
       appBar: AppBar(title: const Text('Minhas Viagens'), centerTitle: true),
       body: travels.isEmpty
           ? const Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.travel_explore, size: 56),
-                  SizedBox(height: 12),
-                  Text('Nenhuma viagem'),
-                ],
-              ),
-            )
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.travel_explore, size: 56),
+            SizedBox(height: 12),
+            Text('Nenhuma viagem'),
+          ],
+        ),
+      )
           : ListView.builder(
-              itemCount: travels.length,
-              itemBuilder: (_, i) => Expanded(child: TravelCard(travel: travels[i])),
-            ),
+        itemCount: travels.length,
+        itemBuilder: (_, i) => TravelCard(
+          travel: travels[i],
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              '/travel-details',
+              arguments: travels[i].travelId,
+            ).then((_) {
+              context.read<TravelProvider>().loadTravels();
+            });
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, '/travel-register').then((result) {

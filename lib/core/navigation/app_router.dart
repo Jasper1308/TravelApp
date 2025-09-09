@@ -7,6 +7,6 @@ class AppRouter {
   static Map<String, WidgetBuilder> get routes => {
     '/participant-register': (context) => const ParticipantRegisterScreen(),
     '/travel-stop-register': (context) => const TravelStopRegisterScreen(),
-    '/travel-register' : (context) => const TravelRegisterScreen()
+    '/travel-register' : (context) => const TravelRegisterScreen(),
   };
 }

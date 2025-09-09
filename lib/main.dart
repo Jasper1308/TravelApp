@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
       ],
       locale: Locale(preferencesState.language),
       supportedLocales: const [Locale('en'), Locale('es'), Locale('pt')],
-      home: const AuthGate(),
+      home: AuthGate(),
       routes: AppRouter.routes,
     );
   }

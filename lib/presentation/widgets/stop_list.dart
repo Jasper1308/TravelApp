@@ -9,9 +9,9 @@ class StopList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final draft = context.watch<TravelRegisterProvider>();
-    final stops = draft.stops;
-    final totalDays = draft.totalDays;
+    final registerProvider = context.watch<TravelRegisterProvider>();
+    final stops = registerProvider.stops;
+    final totalDays = registerProvider.totalDays;
 
     if (totalDays == 0) {
       return const Center(child: Text('Defina o período da viagem para adicionar paradas.'));
@@ -25,7 +25,7 @@ class StopList extends StatelessWidget {
             onReorder: (oldIndex, newIndex) => context.read<TravelRegisterProvider>().reorderStops(oldIndex, newIndex),
             itemBuilder: (context, index) {
               final stop = stops[index];
-              final dt = draft.dateForStop(stop);
+              final dt = registerProvider.dateForStop(stop);
               final locale = Localizations.localeOf(context);
 
               return Card(
@@ -33,13 +33,13 @@ class StopList extends StatelessWidget {
                 child: ListTile(
                   title: Text(stop.placeName),
                   subtitle: Text(
-                    'Dia \${stop.dayIndex + 1} • \${dt == null ? '' : DateFormat.yMMMd(locale.toString()).format(dt)}',
+                    'Dia ${stop.dayIndex + 1} • ${dt == null ? '' : DateFormat.yMMMd(locale.toString()).format(dt)}',
                   ),
                   trailing: DropdownButton<int>(
                     value: stop.dayIndex.clamp(0, totalDays - 1).toInt(),
                     items: List.generate(
                       totalDays,
-                      (i) => DropdownMenuItem(value: i, child: Text('Dia \${i + 1}')),
+                      (i) => DropdownMenuItem(value: i, child: Text('Dia ${i + 1}')),
                     ),
                     onChanged: (v) {
                       if (v != null) {
