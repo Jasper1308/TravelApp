@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/domain/entities/participant.dart';
 import 'package:travel_app/presentation/providers/participant_provider.dart';
 
 class ParticipantListScreen extends StatelessWidget {
