@@ -15,5 +15,50 @@
   "historic": "Histórico",
   "localEstablishments": "Estabelecimentos Locais",
   "nature": "Natureza",
-  "dateFormat": "dd/MM/yyyy"
+  "dateFormat": "dd/MM/yyyy",
+  "tapForDetails": "Toque para detalhes",
+  "tripName": "Nome da viagem",
+  "transport": "Transporte",
+  "start": "Início",
+  "end": "Término",
+  "participants": "Participantes",
+  "addParticipant": "Adicionar participante",
+  "registerParticipant": "Cadastrar participante",
+  "selectParticipant": "Selecionar participante",
+  "birthdate": "Nascimento",
+  "register": "Cadastrar",
+  "requiredName": "Informe o nome",
+  "fillAllFields": "Preencha todos campos",
+  "select": "Selecionar",
+  "saveTrip": "Salvar viagem",
+  "tripCreated": "Viagem criada (# {id})",
+  "registerTrip": "Cadastrar Viagem",
+  "name": "Nome",
+  "travelDetails": "Detalhes da Viagem",
+  "loading": "Carregando...",
+  "errorLoadingDetails": "Erro ao carregar detalhes da viagem",
+  "tripStops": "Paradas da Viagem",
+  "myStops": "Minhas Paradas",
+  "noStopsRegistered": "Nenhuma parada registrada nesta viagem.",
+  "stop": "Parada",
+  "noParticipantsRegistered": "Nenhum participante registrado.",
+  "generatePdf": "Gerar PDF",
+  "experiences": "Experiências",
+  "registerExperience": "Registrar Experiência",
+  "comment": "Comentário",
+  "photo": "Foto",
+  "save": "Salvar",
+  "noComment": "Sem comentário",
+  "createdAt": "Criado em: {createdAt}",
+  "@createdAt": {
+    "placeholders": {
+      "createdAt": {}
+    }
+  },
+  "loadingPdf": "Gerando PDF...",
+  "@tripCreated": {
+    "placeholders": {
+      "id": {}
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/presentation/providers/travel_register_provider.dart';
+import 'package:travel_app/presentation/providers/travel_stop_provider.dart';
 import 'package:travel_app/presentation/widgets/map_screen.dart';
 import 'package:travel_app/presentation/widgets/travel_stop_details_modal.dart';
 import 'package:travel_app/services/nominatim_service.dart';
@@ -31,32 +32,32 @@ class _State extends State<TravelStopRegisterScreen> {
         _showModal();
       }
     } catch (e) {
-      // log error or show snackbar if appropriate
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao buscar o local: \$e')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Erro ao buscar o local: $e')));
     }
   }
 
   void _showModal() {
     if (_coords == null) return;
-    final provider = context.read<TravelRegisterProvider>();
+    final travelProvider = context.read<TravelRegisterProvider>();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (_) {
         return TravelStopDetailsModal(
           initialPosition: _coords!,
-          arrivalDate: provider.initialDate,
-          departureDate: provider.endDate,
+          arrivalDate: travelProvider.initialDate,
+          departureDate: travelProvider.endDate,
           addStop: (lengthStay, description, experiences) async {
-            if (_coords == null) return;
-            await context.read<TravelRegisterProvider>().addStopFromCoordinates(
-              _coords!,
+            if (_coords == null || _placeName == null) return;
+            await context.read<TravelStopProvider>().addStop(
+              coordinates: _coords!,
               description: description,
+              placeName: _placeName!,
               lengthStay: lengthStay,
               experiences: experiences,
-              arrivalDate: provider.initialDate ?? DateTime.now(),
-              departureDate: provider.endDate ?? DateTime.now(),
+              arrivalDate: travelProvider.initialDate ?? DateTime.now(),
+              departureDate: travelProvider.endDate ?? DateTime.now(),
             );
             if (context.mounted) Navigator.pop(context);
           },

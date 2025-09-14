@@ -195,6 +195,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'MM/dd/yyyy'**
   String get dateFormat;
+
+  /// No description provided for @tapForDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap for details'**
+  String get tapForDetails;
+
+  /// No description provided for @tripName.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip name'**
+  String get tripName;
+
+  /// No description provided for @transport.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get transport;
+
+  /// No description provided for @start.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get start;
+
+  /// No description provided for @end.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get end;
+
+  /// No description provided for @participants.
+  ///
+  /// In en, this message translates to:
+  /// **'Participants'**
+  String get participants;
+
+  /// No description provided for @addParticipant.
+  ///
+  /// In en, this message translates to:
+  /// **'Add participant'**
+  String get addParticipant;
+
+  /// No description provided for @registerParticipant.
+  ///
+  /// In en, this message translates to:
+  /// **'Register participant'**
+  String get registerParticipant;
+
+  /// No description provided for @selectParticipant.
+  ///
+  /// In en, this message translates to:
+  /// **'Select participant'**
+  String get selectParticipant;
+
+  /// No description provided for @birthdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthdate'**
+  String get birthdate;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @requiredName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get requiredName;
+
+  /// No description provided for @fillAllFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill all fields'**
+  String get fillAllFields;
+
+  /// No description provided for @select.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get select;
+
+  /// No description provided for @saveTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Save trip'**
+  String get saveTrip;
+
+  /// No description provided for @tripCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip created (# {id})'**
+  String tripCreated(Object id);
+
+  /// No description provided for @registerTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Trip'**
+  String get registerTrip;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @travelDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel Details'**
+  String get travelDetails;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// No description provided for @errorLoadingDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading travel details'**
+  String get errorLoadingDetails;
+
+  /// No description provided for @tripStops.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip Stops'**
+  String get tripStops;
+
+  /// No description provided for @myStops.
+  ///
+  /// In en, this message translates to:
+  /// **'My Stops'**
+  String get myStops;
+
+  /// No description provided for @noStopsRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'No stops registered for this trip.'**
+  String get noStopsRegistered;
+
+  /// No description provided for @stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stop;
+
+  /// No description provided for @noParticipantsRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'No participants registered.'**
+  String get noParticipantsRegistered;
+
+  /// No description provided for @generatePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate PDF'**
+  String get generatePdf;
+
+  /// No description provided for @experiences.
+  ///
+  /// In en, this message translates to:
+  /// **'Experiences'**
+  String get experiences;
+
+  /// No description provided for @registerExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Experience'**
+  String get registerExperience;
+
+  /// No description provided for @comment.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment'**
+  String get comment;
+
+  /// No description provided for @photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get photo;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @noComment.
+  ///
+  /// In en, this message translates to:
+  /// **'No comment'**
+  String get noComment;
+
+  /// No description provided for @createdAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Created at: {createdAt}'**
+  String createdAt(Object createdAt);
+
+  /// No description provided for @loadingPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating PDF...'**
+  String get loadingPdf;
 }
 
 class _AppLocalizationsDelegate

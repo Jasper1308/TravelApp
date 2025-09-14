@@ -1,34 +1,36 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:travel_app/presentation/providers/participant_provider.dart';
-import 'package:travel_app/presentation/widgets/register_button.dart';
+import 'package:travel_app/domain/entities/participant.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
 
-class ParticipantList extends StatelessWidget {
-  const ParticipantList({super.key});
+class ParticipantsListWidget extends StatelessWidget {
+  final List<Participant> participants;
+
+  const ParticipantsListWidget({super.key, required this.participants});
 
   @override
   Widget build(BuildContext context) {
-    final participants = context.watch<ParticipantProvider>().participants;
-
-    return Column(
-      children: [
-        Wrap(
-          spacing: 8,
-          children: [
-            for (final p in participants)
-              CircleAvatar(
-                backgroundImage: p.photoPath.isNotEmpty ? FileImage(File(p.photoPath)) : null,
-                child: p.photoPath.isEmpty ? Text(p.name.isNotEmpty ? p.name[0] : '?') : null,
-              ),
-          ],
+    final l10n = AppLocalizations.of(context)!;
+    if (participants.isEmpty) {
+      return Center(
+        child: Text(
+          l10n.noParticipantsRegistered,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
-        const SizedBox(height: 12),
-        RegisterButton(
-          onPressed: () => Navigator.pushNamed(context, '/participant-register'),
-          text: 'Cadastrar Participante',
-        ),
-      ],
+      );
+    }
+    return Wrap(
+      spacing: 12.0,
+      runSpacing: 8.0,
+      alignment: WrapAlignment.center,
+      children: participants.map((p) {
+        return CircleAvatar(
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Text(
+            p.name.isNotEmpty ? p.name[0].toUpperCase() : '?',
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        );
+      }).toList(),
     );
   }
 }

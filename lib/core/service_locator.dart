@@ -7,6 +7,7 @@ import 'package:travel_app/domain/usecases/associate_participant_with_travel_use
 import 'package:travel_app/domain/usecases/create_participant_usecase.dart';
 import 'package:travel_app/domain/usecases/create_travel_usecase.dart';
 import 'package:travel_app/domain/usecases/get_stop_date_usecase.dart';
+import 'package:travel_app/domain/usecases/get_travel_with_details_usecase.dart';
 import 'package:travel_app/domain/usecases/list_participants_usecase.dart';
 import 'package:travel_app/domain/usecases/list_travel_usecase.dart';
 import 'package:travel_app/domain/usecases/reorder_stop_usecase.dart';
@@ -39,8 +40,8 @@ class ServiceLocator {
   late final UpdateStopsDayIndexUseCase updateStopsDayIndexUC;
   late final RemoveParticipantUseCase removeParticipantUC;
   late final GetStopDateUseCase getStopDateUseCase;
-  late final AssociateParticipantWithTravelUseCaseImpl
-  associateParticipantWithTravelUC;
+  late final AssociateParticipantWithTravelUseCase associateParticipantWithTravelUC;
+  late final GetTravelWithDetailsUseCase getTravelDetailsUseCase;
 
   Future<void> init() async {
     travelRepo = TravelRepositoryImpl(db);
@@ -62,7 +63,7 @@ class ServiceLocator {
     updateStopsDayIndexUC = UpdateStopsDayIndexUseCase();
     removeParticipantUC = RemoveParticipantUseCase(participantRepo);
     getStopDateUseCase = GetStopDateUseCase();
-    associateParticipantWithTravelUC =
-        AssociateParticipantWithTravelUseCaseImpl(travelRepo);
+    associateParticipantWithTravelUC = AssociateParticipantWithTravelUseCaseImpl(travelRepo, db.getDatabase());
+    getTravelDetailsUseCase = GetTravelWithDetailsUseCase(travelRepo);
   }
 }

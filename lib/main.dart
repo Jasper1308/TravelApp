@@ -9,10 +9,11 @@ import 'package:travel_app/firebase_options.dart';
 import 'package:travel_app/l10n/app_localizations.dart';
 import 'package:travel_app/presentation/providers/app_preferences_provider.dart';
 import 'package:travel_app/presentation/providers/participant_provider.dart';
+import 'package:travel_app/presentation/providers/pdf_generator_provider.dart';
 import 'package:travel_app/presentation/providers/travel_provider.dart';
 import 'package:travel_app/presentation/providers/travel_register_provider.dart';
-import 'package:travel_app/presentation/providers/travel_stop_provider.dart';
 import 'package:travel_app/core/service_locator.dart';
+import 'package:travel_app/presentation/providers/travel_stop_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,18 +42,18 @@ void main() async {
           ),
         ),
         ChangeNotifierProvider(
+          create: (_) => TravelRegisterProvider(
+            ServiceLocator().createTravelUC,
+            ServiceLocator().getStopDateUseCase,
+          ),
+        ),
+        ChangeNotifierProvider(
           create: (_) => TravelStopProvider(
-            ServiceLocator().addStopUC,
             ServiceLocator().reorderStopsUC,
           ),
         ),
         ChangeNotifierProvider(
-          create: (_) => TravelRegisterProvider(
-            ServiceLocator().createTravelUC,
-            ServiceLocator().addStopUC,
-            ServiceLocator().getStopDateUseCase,
-            ServiceLocator().reorderStopsUC,
-          ),
+          create: (context) => PdfGeneratorProvider(),
         ),
       ],
       child: const MyApp(),
@@ -80,7 +81,7 @@ class MyApp extends StatelessWidget {
       ],
       locale: Locale(preferencesState.language),
       supportedLocales: const [Locale('en'), Locale('es'), Locale('pt')],
-      home: AuthGate(),
+      home: const AuthGate(),
       routes: AppRouter.routes,
     );
   }

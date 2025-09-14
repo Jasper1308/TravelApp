@@ -3,13 +3,11 @@ import 'package:travel_app/domain/entities/travel_stop.dart';
 import 'package:travel_app/domain/enums/transport_type.dart';
 
 class Travel {
-  final int travelId;
+  int travelId;
   final String name;
   final DateTime initialDate;
   final DateTime endDate;
   final TransportType transportType;
-  final List<TravelStop> stops;
-  final List<Participant> participants;
 
   Travel({
     required this.travelId,
@@ -19,8 +17,7 @@ class Travel {
     required this.transportType,
     List<TravelStop>? stops,
     List<Participant>? participants,
-  }) : stops = stops ?? const [],
-       participants = participants ?? const [];
+  });
 
   factory Travel.fromMap(Map<String, dynamic> map) {
     final idRaw = map['travelId'];
@@ -42,7 +39,6 @@ class Travel {
 
   Map<String, dynamic> toMap() {
     return {
-      'travelId': travelId,
       'name': name,
       'initialDate': initialDate.toIso8601String(),
       'endDate': endDate.toIso8601String(),
@@ -65,8 +61,6 @@ class Travel {
       initialDate: initialDate ?? this.initialDate,
       endDate: endDate ?? this.endDate,
       transportType: transportType ?? this.transportType,
-      stops: stops ?? this.stops,
-      participants: participants ?? this.participants,
     );
   }
 

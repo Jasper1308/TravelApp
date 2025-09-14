@@ -14,12 +14,13 @@ class TravelDetailsProvider extends ChangeNotifier {
   bool get loading => _loading;
 
   Future<void> load(int travelId) async {
-    _loading = true;
-    notifyListeners();
-
+    _setLoading(true);
     _details = await _getTravelWithDetails(travelId);
+    _setLoading(false);
+  }
 
-    _loading = false;
+  void _setLoading(bool value) {
+    _loading = value;
     notifyListeners();
   }
 }

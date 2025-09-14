@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_app/core/service_locator.dart';
 import 'package:travel_app/presentation/providers/travel_provider.dart';
+import 'package:travel_app/presentation/providers/travel_register_provider.dart';
+import 'package:travel_app/presentation/providers/travel_stop_provider.dart';
+import 'package:travel_app/presentation/screens/travel_register_screen.dart';
 import 'package:travel_app/presentation/widgets/travel_card.dart';
 
 class MyTravelsScreen extends StatefulWidget {
@@ -63,10 +67,20 @@ class _MyTravelsScreenState extends State<MyTravelsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/travel-register').then((result) {
-            if (result != null) {
-              context.read<TravelProvider>().loadTravels();
-            }
+          context.read<TravelRegisterProvider>().resetState();
+          context.read<TravelStopProvider>().clearStops();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(
+                create: (_) => TravelStopProvider(
+                  ServiceLocator().reorderStopsUC,
+                ),
+                child: const TravelRegisterScreen(),
+              ),
+            ),
+          ).then((_) {
+            context.read<TravelProvider>().loadTravels();
           });
         },
         child: const Icon(Icons.add),

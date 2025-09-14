@@ -115,13 +115,19 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: isAddButtonEnabled
-                    ? () => addStop(
+                    ? () { addStop(
                         int.tryParse(lengthStayController.text) ?? 0,
                         descriptionController.text,
                         selectedExperiencesNotifier.value,
-                      )
+                      );
+                      Navigator.pop(context);
+                      lengthStayController.clear();
+                      descriptionController.clear();
+                      selectedExperiencesNotifier.value = [];
+                }
                     : null,
                 child: const Text('Adicionar'),
+
               ),
             ],
           ),

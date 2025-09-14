@@ -2,11 +2,10 @@ import 'package:travel_app/domain/entities/travel_stop.dart';
 
 class ReorderStopsUseCase {
   void call(List<TravelStop> stops, int oldIndex, int newIndex, int totalDays) {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
-    final stop = stops.removeAt(oldIndex);
-    stops.insert(newIndex, stop);
+    if (stops.isEmpty) return;
+    if (oldIndex < newIndex) newIndex -= 1;
+    final item = stops.removeAt(oldIndex);
+    stops.insert(newIndex, item);
 
     for (int i = 0; i < stops.length; i++) {
       stops[i] = stops[i].copyWith(stopOrder: i);
@@ -14,10 +13,11 @@ class ReorderStopsUseCase {
 
     int currentDay = 0;
     for (int i = 0; i < stops.length; i++) {
-      final stop = stops[i];
-      final newDayIndex = (currentDay + stop.lengthStay).clamp(0, totalDays - 1);
-      stops[i] = stop.copyWith(dayIndex: newDayIndex);
-      currentDay = newDayIndex;
+      final s = stops[i];
+      final dayIndex = totalDays > 0 ? currentDay.clamp(0, totalDays - 1) : 0;
+      stops[i] = s.copyWith(dayIndex: dayIndex);
+      currentDay += s.lengthStay;
+      if (totalDays > 0 && currentDay >= totalDays) currentDay = totalDays - 1;
     }
   }
 }

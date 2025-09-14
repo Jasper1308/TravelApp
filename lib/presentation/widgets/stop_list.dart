@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:travel_app/presentation/providers/travel_register_provider.dart';
+import 'package:travel_app/presentation/providers/travel_stop_provider.dart';
+import 'package:travel_app/presentation/screens/travel_stop_register_screen.dart';
 import 'package:travel_app/presentation/widgets/register_button.dart';
+import 'package:reorderables/reorderables.dart';
 
 class StopList extends StatelessWidget {
   const StopList({super.key});
@@ -10,54 +13,84 @@ class StopList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerProvider = context.watch<TravelRegisterProvider>();
-    final stops = registerProvider.stops;
+    final stopProvider = context.watch<TravelStopProvider>();
+    final stops = stopProvider.stops;
     final totalDays = registerProvider.totalDays;
 
     if (totalDays == 0) {
-      return const Center(child: Text('Defina o período da viagem para adicionar paradas.'));
+      return const Center(
+        child: Text('Defina o período da viagem para adicionar paradas.'),
+      );
     }
 
     return Column(
       children: [
-        Expanded(
-          child: ReorderableListView.builder(
-            itemCount: stops.length,
-            onReorder: (oldIndex, newIndex) => context.read<TravelRegisterProvider>().reorderStops(oldIndex, newIndex),
-            itemBuilder: (context, index) {
-              final stop = stops[index];
-              final dt = registerProvider.dateForStop(stop);
-              final locale = Localizations.localeOf(context);
-
-              return Card(
+        ReorderableColumn(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: stops.asMap().entries.map((entry) {
+            final index = entry.key;
+            final stop = entry.value;
+            return Dismissible(
+              key: ValueKey(stop.placeName + stop.description),
+              direction: DismissDirection.endToStart,
+              onDismissed: (direction) {
+                context.read<TravelStopProvider>().removeStop(stop);
+              },
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: const Icon(Icons.delete, color: Colors.white),
+              ),
+              child: Card(
                 key: ValueKey(stop.travelStopId),
                 child: ListTile(
                   title: Text(stop.placeName),
                   subtitle: Text(
-                    'Dia ${stop.dayIndex + 1} • ${dt == null ? '' : DateFormat.yMMMd(locale.toString()).format(dt)}',
+                    'Dia ${stop.dayIndex + 1} • ${registerProvider.dateForStop(stop, stops) != null ? DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(registerProvider.dateForStop(stop, stops)!) : ''}',
                   ),
                   trailing: DropdownButton<int>(
-                    value: stop.dayIndex.clamp(0, totalDays - 1).toInt(),
+                    value: (stop.lengthStay).clamp(1, registerProvider.totalDays),
                     items: List.generate(
-                      totalDays,
-                      (i) => DropdownMenuItem(value: i, child: Text('Dia ${i + 1}')),
+                      registerProvider.totalDays,
+                      (i) => DropdownMenuItem(
+                        value: i + 1,
+                        child: Text('${i + 1} dia${i == 0 ? '' : 's'}'),
+                      ),
                     ),
                     onChanged: (v) {
                       if (v != null) {
-                        context.read<TravelRegisterProvider>().setStopDay(stop, v);
+                        context.read<TravelStopProvider>().setStopLength(
+                          index,
+                          v,
+                        );
                       }
                     },
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          }).toList(),
+          onReorder: (oldIndex, newIndex) {
+            stopProvider.reorder(oldIndex, newIndex, totalDays);
+          },
         ),
+        const SizedBox(height: 12),
         RegisterButton(
           text: 'Cadastrar parada',
-          onPressed: () => Navigator.pushNamed(
-            context,
-            '/travel-stop-register',
-          ),
+          onPressed: () {
+            final stopProvider = context.read<TravelStopProvider>();
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChangeNotifierProvider.value(
+                  value: stopProvider,
+                  child: const TravelStopRegisterScreen(),
+                ),
+              ),
+            );
+          },
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_app/domain/entities/travel_stop.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
 
 class TravelMapWidget extends StatelessWidget {
   final List<TravelStop> stops;
@@ -9,8 +10,10 @@ class TravelMapWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (stops.isEmpty) {
-      return const Center(child: Text("Nenhuma parada registrada"));
+      return Center(child: Text(l10n.noStopsRegistered));
     }
 
     final markers = stops.map((s) {
@@ -18,7 +21,10 @@ class TravelMapWidget extends StatelessWidget {
       return Marker(
         markerId: MarkerId(s.travelStopId.toString()),
         position: LatLng(coords.latitude, coords.longitude),
-        infoWindow: InfoWindow(title: s.description),
+        infoWindow: InfoWindow(
+          title: s.placeName,
+          snippet: s.description,
+        ),
       );
     }).toSet();
 

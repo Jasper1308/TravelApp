@@ -15,5 +15,50 @@
   "historic": "Historic",
   "localEstablishments": "Local Establishments",
   "nature": "Nature",
-  "dateFormat": "MM/dd/yyyy"
+  "dateFormat": "MM/dd/yyyy",
+  "tapForDetails": "Tap for details",
+  "tripName": "Trip name",
+  "transport": "Transport",
+  "start": "Start",
+  "end": "End",
+  "participants": "Participants",
+  "addParticipant": "Add participant",
+  "registerParticipant": "Register participant",
+  "selectParticipant": "Select participant",
+  "birthdate": "Birthdate",
+  "register": "Register",
+  "requiredName": "Name is required",
+  "fillAllFields": "Fill all fields",
+  "select": "Select",
+  "saveTrip": "Save trip",
+  "tripCreated": "Trip created (# {id})",
+  "registerTrip": "Register Trip",
+  "name": "Name",
+  "travelDetails": "Travel Details",
+  "loading": "Loading...",
+  "errorLoadingDetails": "Error loading travel details",
+  "tripStops": "Trip Stops",
+  "myStops": "My Stops",
+  "noStopsRegistered": "No stops registered for this trip.",
+  "stop": "Stop",
+  "noParticipantsRegistered": "No participants registered.",
+  "generatePdf": "Generate PDF",
+  "experiences": "Experiences",
+  "registerExperience": "Register Experience",
+  "comment": "Comment",
+  "photo": "Photo",
+  "save": "Save",
+  "noComment": "No comment",
+  "createdAt": "Created at: {createdAt}",
+  "@createdAt": {
+    "placeholders": {
+      "createdAt": {}
+    }
+  },
+  "loadingPdf": "Generating PDF...",
+  "@tripCreated": {
+    "placeholders": {
+      "id": {}
+    }
+  }
 }

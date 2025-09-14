@@ -1,67 +1,137 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
 import 'package:travel_app/presentation/providers/travel_details_provider.dart';
+import 'package:travel_app/presentation/widgets/travel_map_widget.dart';
+import 'package:travel_app/presentation/widgets/travel_stop_card.dart';
+import 'package:travel_app/presentation/widgets/participant_list.dart';
+import 'package:travel_app/presentation/providers/pdf_generator_provider.dart';
 
-class TravelDetailsScreen extends StatelessWidget {
+class TravelDetailsScreen extends StatefulWidget {
   final int travelId;
 
   const TravelDetailsScreen({super.key, required this.travelId});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => TravelDetailsProvider(
-        Provider.of(context, listen: false),
-      )..load(travelId),
-      child: Consumer<TravelDetailsProvider>(
-        builder: (ctx, provider, _) {
-          if (provider.loading) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          }
-          if (provider.details == null) {
-            return const Scaffold(
-              body: Center(child: Text('Erro ao carregar detalhes')),
-            );
-          }
+  State<TravelDetailsScreen> createState() => _TravelDetailsScreenState();
+}
 
-          final details = provider.details!;
-          return Scaffold(
-            appBar: AppBar(title: Text(details.travel.name)),
-            body: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TravelDetailsProvider>().load(widget.travelId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final detailsProvider = context.watch<TravelDetailsProvider>();
+    final pdfProvider = context.watch<PdfGeneratorProvider>();
+    final travelDetails = detailsProvider.details;
+    final l10n = AppLocalizations.of(context)!;
+
+    if (detailsProvider.loading) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor)),
+      );
+    }
+
+    if (travelDetails == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.travelDetails),
+        ),
+        body: Center(child: Text(l10n.errorLoadingDetails)),
+      );
+    }
+
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: false,
+              title: Text(
+                travelDetails.travel.name,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+              ),
+              background: Hero(
+                tag: 'travel-${travelDetails.travel.travelId}',
+                child: Container(color: Theme.of(context).primaryColor),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${details.travel.initialDate} - ${details.travel.endDate}',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    l10n.participants,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 12),
+                  ParticipantsListWidget(participants: travelDetails.participants),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        l10n.myStops,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: pdfProvider.loading ? null : () async {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(l10n.loadingPdf)),
+                          );
+                          await pdfProvider.generateTravelPdf(travelDetails);
+                        },
+                        icon: const Icon(Icons.picture_as_pdf),
+                        label: Text(l10n.generatePdf),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.secondary,
+                          foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    'Participantes:',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  ...details.participants.map((p) => ListTile(
-                    title: Text(p.name),
-                  )),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Paradas:',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  ...details.stops.map((s) => ListTile(
-                    title: Text(s.description),
-                    subtitle: Text(
-                      '${s.arrivalDate} → ${s.departureDate}',
+                  TravelMapWidget(stops: travelDetails.stops),
+                  const SizedBox(height: 24),
+                  if (travelDetails.stops.isEmpty)
+                    Center(
+                      child: Text(l10n.noStopsRegistered),
+                    )
+                  else
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: travelDetails.stops.length,
+                      itemBuilder: (context, i) {
+                        final stop = travelDetails.stops[i];
+                        return TravelStopCard(
+                          stop: stop,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/stop-details',
+                              arguments: stop.travelStopId,
+                            );
+                          },
+                        );
+                      },
                     ),
-                  )),
                 ],
               ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

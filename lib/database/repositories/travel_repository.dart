@@ -20,7 +20,16 @@ class TravelRepositoryImpl implements TravelRepository {
     return await txn.insert(
       TravelTable.tableName,
       travel.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  @override
+  Future<int> update(DatabaseExecutor txn, Travel travel) async {
+    return await txn.update(
+      TravelTable.tableName,
+      travel.toMap(),
+      where: '${TravelTable.travelId} = ?',
+      whereArgs: [travel.travelId],
     );
   }
 
@@ -43,9 +52,10 @@ class TravelRepositoryImpl implements TravelRepository {
 
   @override
   Future<void> associateParticipantWithTravel(
-    int participantId,
-    int travelId,
-  ) async {
+      DatabaseExecutor txn,
+      int participantId,
+      int travelId,
+      ) async {
     final db = await _db.getDatabase();
     await db.insert(
       TravelParticipantTable.tableName,
@@ -107,16 +117,25 @@ class TravelRepositoryImpl implements TravelRepository {
     final participants = ids.isEmpty
         ? <Participant>[]
         : (await db.query(
-            ParticipantTable.tableName,
-            where:
-                '${ParticipantTable.participantId} IN (${List.filled(ids.length, '?').join(',')})',
-            whereArgs: ids,
-          )).map((map) => Participant.fromMap(map)).toList();
+      ParticipantTable.tableName,
+      where:
+      '${ParticipantTable.participantId} IN (${List.filled(ids.length, '?').join(',')})',
+      whereArgs: ids,
+    )).map((map) => Participant.fromMap(map)).toList();
 
     return TravelWithDetails(
       travel: travel,
       stops: stops,
       participants: participants,
+    );
+  }
+
+  @override
+  Future<void> unassociateAllParticipants(DatabaseExecutor txn, int travelId) async {
+    await txn.delete(
+      TravelParticipantTable.tableName,
+      where: '${TravelParticipantTable.travelId} = ?',
+      whereArgs: [travelId],
     );
   }
 }
