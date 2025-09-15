@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:travel_app/domain/entities/participant.dart';
 import 'package:travel_app/l10n/app_localizations.dart';
@@ -19,16 +21,13 @@ class ParticipantsListWidget extends StatelessWidget {
       );
     }
     return Wrap(
-      spacing: 12.0,
-      runSpacing: 8.0,
-      alignment: WrapAlignment.center,
+      spacing: 8,
+      runSpacing: 8,
       children: participants.map((p) {
         return CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
-          child: Text(
-            p.name.isNotEmpty ? p.name[0].toUpperCase() : '?',
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
+          radius: 24,
+          backgroundImage: p.photoPath.isNotEmpty ? FileImage(File(p.photoPath)) : null,
+          child: p.photoPath.isEmpty ? Text(p.name.isNotEmpty ? p.name[0] : '?') : null,
         );
       }).toList(),
     );

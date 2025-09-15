@@ -51,21 +51,29 @@ class TravelRepositoryImpl implements TravelRepository {
   }
 
   @override
+  @override
   Future<void> associateParticipantWithTravel(
       DatabaseExecutor txn,
       int participantId,
       int travelId,
       ) async {
-    final db = await _db.getDatabase();
-    await db.insert(
-      TravelParticipantTable.tableName,
-      {
-        TravelParticipantTable.participantId: participantId,
-        TravelParticipantTable.travelId: travelId,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    try {
+      await txn.insert(
+        TravelParticipantTable.tableName,
+        {
+          TravelParticipantTable.participantId: participantId,
+          TravelParticipantTable.travelId: travelId,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      print("✅ Participante $participantId associado com viagem $travelId");
+    } catch (e, s) {
+      print("❌ Erro ao associar participante com viagem: $e");
+      print(s);
+      rethrow;
+    }
   }
+
 
   @override
   Future<Travel?> getById(int id) async {

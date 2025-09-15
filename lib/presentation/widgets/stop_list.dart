@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
 import 'package:travel_app/presentation/providers/travel_register_provider.dart';
 import 'package:travel_app/presentation/providers/travel_stop_provider.dart';
 import 'package:travel_app/presentation/screens/travel_stop_register_screen.dart';
@@ -16,10 +17,11 @@ class StopList extends StatelessWidget {
     final stopProvider = context.watch<TravelStopProvider>();
     final stops = stopProvider.stops;
     final totalDays = registerProvider.totalDays;
+    final l10n = AppLocalizations.of(context)!;
 
     if (totalDays == 0) {
-      return const Center(
-        child: Text('Defina o período da viagem para adicionar paradas.'),
+      return Center(
+        child: Text(l10n.defineTripPeriod),
       );
     }
 
@@ -47,15 +49,15 @@ class StopList extends StatelessWidget {
                 child: ListTile(
                   title: Text(stop.placeName),
                   subtitle: Text(
-                    'Dia ${stop.dayIndex + 1} • ${registerProvider.dateForStop(stop, stops) != null ? DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(registerProvider.dateForStop(stop, stops)!) : ''}',
+                    '${l10n.day} ${stop.dayIndex + 1} • ${registerProvider.dateForStop(stop, stops) != null ? DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(registerProvider.dateForStop(stop, stops)!) : ''}',
                   ),
                   trailing: DropdownButton<int>(
                     value: (stop.lengthStay).clamp(1, registerProvider.totalDays),
                     items: List.generate(
                       registerProvider.totalDays,
-                      (i) => DropdownMenuItem(
+                          (i) => DropdownMenuItem(
                         value: i + 1,
-                        child: Text('${i + 1} dia${i == 0 ? '' : 's'}'),
+                        child: Text(l10n.numberOfDays(i + 1)),
                       ),
                     ),
                     onChanged: (v) {
@@ -77,7 +79,7 @@ class StopList extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         RegisterButton(
-          text: 'Cadastrar parada',
+          text: l10n.registerStop,
           onPressed: () {
             final stopProvider = context.read<TravelStopProvider>();
 

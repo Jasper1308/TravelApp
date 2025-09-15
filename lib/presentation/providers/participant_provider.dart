@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:travel_app/domain/entities/participant.dart';
 import 'package:travel_app/domain/usecases/associate_participant_with_travel_usecase.dart';
 import 'package:travel_app/domain/usecases/create_participant_usecase.dart';
@@ -12,11 +13,11 @@ class ParticipantProvider extends ChangeNotifier {
   final AssociateParticipantWithTravelUseCase _associateWithTravel;
 
   ParticipantProvider(
-    this._createParticipant,
-    this._listParticipants,
-    this._removeParticipant,
-    this._associateWithTravel,
-  );
+      this._createParticipant,
+      this._listParticipants,
+      this._removeParticipant,
+      this._associateWithTravel,
+      );
 
   List<Participant> _participants = [];
 
@@ -37,7 +38,7 @@ class ParticipantProvider extends ChangeNotifier {
     await loadParticipants();
   }
 
-  Future<void> associateWithTravel(int participantId, int travelId) async {
-    await _associateWithTravel(participantId, travelId);
+  Future<void> associateWithTravel(int participantId, int travelId, [DatabaseExecutor? txn]) async {
+    await _associateWithTravel(participantId, travelId, txn: txn);
   }
 }

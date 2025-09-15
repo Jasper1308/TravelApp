@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
@@ -15,4 +16,18 @@ class AppTheme {
     ),
     useMaterial3: true,
   );
+}
+
+extension ThemeModeExtension on ThemeMode {
+  String name(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
+    switch (this) {
+      case ThemeMode.system:
+        return locale.themeSystem;
+      case ThemeMode.light:
+        return locale.themeLight;
+      case ThemeMode.dark:
+        return locale.themeDark;
+    }
+  }
 }

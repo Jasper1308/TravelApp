@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app/core/service_locator.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
 import 'package:travel_app/presentation/providers/travel_provider.dart';
 import 'package:travel_app/presentation/providers/travel_register_provider.dart';
 import 'package:travel_app/presentation/providers/travel_stop_provider.dart';
@@ -36,17 +37,18 @@ class _MyTravelsScreenState extends State<MyTravelsScreen> {
   Widget build(BuildContext context) {
     final provider = context.watch<TravelProvider>();
     final travels = provider.travels;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Minhas Viagens'), centerTitle: true),
+      appBar: AppBar(title: Text(l10n.myTravels), centerTitle: true),
       body: travels.isEmpty
-          ? const Center(
+          ? Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.travel_explore, size: 56),
-            SizedBox(height: 12),
-            Text('Nenhuma viagem'),
+            const Icon(Icons.travel_explore, size: 56),
+            const SizedBox(height: 12),
+            Text(l10n.noTravels),
           ],
         ),
       )

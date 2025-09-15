@@ -27,7 +27,7 @@ class ParticipantListScreen extends StatelessWidget {
               trailing: IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () async {
-                  await context.read<ParticipantProvider>().associateWithTravel(p.participantId, travelId);
+                  await context.read<ParticipantProvider>().associateWithTravel(p.participantId, travelId, null);
                   if (context.mounted) Navigator.pop(context, p);
                 },
               ),

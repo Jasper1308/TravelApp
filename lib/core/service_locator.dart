@@ -1,15 +1,20 @@
 import 'package:travel_app/database/database.dart';
 import 'package:travel_app/database/repositories/participant_repository.dart';
 import 'package:travel_app/database/repositories/travel_repository.dart';
+import 'package:travel_app/database/repositories/travel_stop_experience_repository.dart';
 import 'package:travel_app/database/repositories/travel_stop_repository.dart';
+import 'package:travel_app/domain/usecases/add_experience_usecase.dart';
 import 'package:travel_app/domain/usecases/add_stop_usecase.dart';
 import 'package:travel_app/domain/usecases/associate_participant_with_travel_usecase.dart';
 import 'package:travel_app/domain/usecases/create_participant_usecase.dart';
 import 'package:travel_app/domain/usecases/create_travel_usecase.dart';
+import 'package:travel_app/domain/usecases/generate_travel_pdf_usecase.dart';
 import 'package:travel_app/domain/usecases/get_stop_date_usecase.dart';
 import 'package:travel_app/domain/usecases/get_travel_with_details_usecase.dart';
+import 'package:travel_app/domain/usecases/list_experiences_usecase.dart';
 import 'package:travel_app/domain/usecases/list_participants_usecase.dart';
 import 'package:travel_app/domain/usecases/list_travel_usecase.dart';
+import 'package:travel_app/domain/usecases/remove_experience_usecase.dart';
 import 'package:travel_app/domain/usecases/reorder_stop_usecase.dart';
 import 'package:travel_app/domain/usecases/remove_participant_usecase.dart';
 import 'package:travel_app/domain/usecases/remove_travel_usecase.dart';
@@ -29,6 +34,7 @@ class ServiceLocator {
   late final TravelRepositoryImpl travelRepo;
   late final TravelStopRepositoryImpl stopRepo;
   late final ParticipantRepositoryImpl participantRepo;
+  late final TravelStopExperienceRepositoryImpl experienceRepo;
 
   late final CreateTravelUseCase createTravelUC;
   late final ListTravelsUseCase listTravelsUC;
@@ -42,11 +48,16 @@ class ServiceLocator {
   late final GetStopDateUseCase getStopDateUseCase;
   late final AssociateParticipantWithTravelUseCase associateParticipantWithTravelUC;
   late final GetTravelWithDetailsUseCase getTravelDetailsUseCase;
+  late final AddExperienceUseCase addExperienceUseCase;
+  late final ListExperiencesUseCase listExperiencesUseCase;
+  late final RemoveExperienceUseCase removeExperienceUseCase;
+  late final GenerateTravelPdfUseCase generateTravelPdfUC;
 
   Future<void> init() async {
     travelRepo = TravelRepositoryImpl(db);
     stopRepo = const TravelStopRepositoryImpl();
     participantRepo = ParticipantRepositoryImpl(db);
+    experienceRepo = TravelStopExperienceRepositoryImpl(db);
 
     createTravelUC = CreateTravelUseCase(
       travelRepo,
@@ -65,5 +76,9 @@ class ServiceLocator {
     getStopDateUseCase = GetStopDateUseCase();
     associateParticipantWithTravelUC = AssociateParticipantWithTravelUseCaseImpl(travelRepo, db.getDatabase());
     getTravelDetailsUseCase = GetTravelWithDetailsUseCase(travelRepo);
+    addExperienceUseCase = AddExperienceUseCase(experienceRepo);
+    listExperiencesUseCase = ListExperiencesUseCase(experienceRepo);
+    removeExperienceUseCase = RemoveExperienceUseCase(experienceRepo);
+    generateTravelPdfUC = GenerateTravelPdfUseCase(); // AQUI está a mudança!
   }
 }

@@ -14,7 +14,9 @@ class ParticipantRepositoryImpl implements ParticipantRepository {
   Future<int> insertOrUpdate(
     DatabaseExecutor txn,
     Participant participant,
-  ) async {
+  )
+  async {
+    print("Inserindo participante: ${participant.toMap()}");
     final exists = await txn.query(
       ParticipantTable.tableName,
       where: '${ParticipantTable.name} = ?',
@@ -60,19 +62,21 @@ class ParticipantRepositoryImpl implements ParticipantRepository {
   }
 
   @override
-  Future<List<Participant>> listAll() async {
-    final db = await _db.getDatabase();
-    final rows = await db.query(
+  Future<List<Participant>> listAll({DatabaseExecutor? txn}) async {
+    final dbExecutor = txn ?? await _db.getDatabase();
+    final rows = await dbExecutor.query(
       ParticipantTable.tableName,
       orderBy: '${ParticipantTable.participantId} DESC',
     );
     return rows.map((r) => Participant.fromMap(r)).toList();
   }
 
+
+
   @override
-  Future<void> delete(int participantId) async {
-    final db = await _db.getDatabase();
-    await db.delete(
+  Future<void> delete(int participantId,{DatabaseExecutor? txn}) async {
+    final dbExecutor = txn ?? await _db.getDatabase();
+    await dbExecutor.delete(
       ParticipantTable.tableName,
       where: '${ParticipantTable.participantId} = ?',
       whereArgs: [participantId],

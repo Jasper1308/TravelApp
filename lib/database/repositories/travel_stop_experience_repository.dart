@@ -15,7 +15,6 @@ class TravelStopExperienceRepositoryImpl implements TravelStopExperienceReposito
     return await db.insert(
       TravelStopExperienceTable.tableName,
       exp.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 

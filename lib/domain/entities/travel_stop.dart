@@ -1,3 +1,4 @@
+// travel_stop.dart
 import 'dart:convert';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_app/domain/enums/experience_type.dart';
@@ -31,24 +32,17 @@ class TravelStop {
 
   factory TravelStop.fromMap(Map<String, dynamic> map) {
     final experiencesRaw = map['experiences'];
-
     List<int> experienceIndexes = [];
 
-    if (experiencesRaw is String) {
+    if (experiencesRaw is String && experiencesRaw.isNotEmpty) {
       try {
         final decoded = jsonDecode(experiencesRaw);
         if (decoded is List) {
-          experienceIndexes = decoded
-              .map((e) => e is int ? e : int.tryParse(e.toString()) ?? 0)
-              .toList();
+          experienceIndexes = List<int>.from(decoded);
         }
       } catch (_) {
         experienceIndexes = [];
       }
-    } else if (experiencesRaw is List) {
-      experienceIndexes = experiencesRaw
-          .map((e) => e is int ? e : int.tryParse(e.toString()) ?? 0)
-          .toList();
     }
 
     return TravelStop(
@@ -62,10 +56,10 @@ class TravelStop {
         (map['longitude'] as num?)?.toDouble() ?? 0.0,
       ),
       arrivalDate:
-          DateTime.tryParse(map['arrivalDate']?.toString() ?? '') ??
+      DateTime.tryParse(map['arrivalDate']?.toString() ?? '') ??
           DateTime(1970),
       departureDate:
-          DateTime.tryParse(map['departureDate']?.toString() ?? '') ??
+      DateTime.tryParse(map['departureDate']?.toString() ?? '') ??
           DateTime(1970),
       lengthStay: map['lengthStay'] as int? ?? 0,
       description: (map['description'] ?? '') as String,

@@ -1,5 +1,3 @@
-// No arquivo travel_register_provider.dart
-
 import 'package:flutter/material.dart';
 import 'package:travel_app/domain/entities/participant.dart';
 import 'package:travel_app/domain/entities/travel.dart';
@@ -13,10 +11,7 @@ class TravelRegisterProvider extends ChangeNotifier {
   final CreateTravelUseCase _createTravel;
   final GetStopDateUseCase _getStopDateUseCase;
 
-  TravelRegisterProvider(
-      this._createTravel,
-      this._getStopDateUseCase,
-      );
+  TravelRegisterProvider(this._createTravel, this._getStopDateUseCase);
 
   String name = '';
   DateTime? initialDate;
@@ -48,18 +43,13 @@ class TravelRegisterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleParticipant(Participant p) {
-    final exists = participants.any((e) => e.participantId == p.participantId);
+  void toggleParticipant(Participant participant) {
+    final exists = participants.any((p) => p.participantId == participant.participantId);
     if (exists) {
-      participants.removeWhere((e) => e.participantId == p.participantId);
+      participants.removeWhere((p) => p.participantId == participant.participantId);
     } else {
-      participants.add(p);
+      participants.add(participant);
     }
-    notifyListeners();
-  }
-
-  void removeParticipant(Participant p) {
-    participants.removeWhere((e) => e.participantId == p.participantId);
     notifyListeners();
   }
 

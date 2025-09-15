@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_app/domain/enums/experience_type.dart';
+import 'package:travel_app/l10n/app_localizations.dart';
 import 'package:travel_app/presentation/widgets/experience_type_selector.dart';
 
 class TravelStopDetailsModal extends StatefulWidget {
@@ -25,7 +26,7 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController lengthStayController = TextEditingController();
   final ValueNotifier<List<ExperienceType>> selectedExperiencesNotifier =
-      ValueNotifier([]);
+  ValueNotifier([]);
 
   @override
   void initState() {
@@ -38,10 +39,10 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
   }
 
   void addStop(
-    int lengthStay,
-    String description,
-    List<ExperienceType> experiences,
-  ) {
+      int lengthStay,
+      String description,
+      List<ExperienceType> experiences,
+      ) {
     if (widget.addStop != null) {
       widget.addStop?.call(lengthStay, description, experiences);
     }
@@ -58,6 +59,7 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
   @override
   Widget build(BuildContext context) {
     final isAddButtonEnabled = lengthStayController.text.isNotEmpty;
+    final l10n = AppLocalizations.of(context)!;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -72,27 +74,26 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // show arrival/departure if provided
               if (widget.arrivalDate != null || widget.departureDate != null)
                 Row(
                   children: [
                     if (widget.arrivalDate != null)
                       Text(
-                        'Chegada: ${widget.arrivalDate!.toLocal().toIso8601String().split('T').first}',
+                        '${l10n.arrival}: ${widget.arrivalDate!.toLocal().toIso8601String().split('T').first}',
                       ),
                     const SizedBox(width: 12),
                     if (widget.departureDate != null)
                       Text(
-                        'Saída: ${widget.departureDate!.toLocal().toIso8601String().split('T').first}',
+                        '${l10n.departure}: ${widget.departureDate!.toLocal().toIso8601String().split('T').first}',
                       ),
                   ],
                 ),
               const SizedBox(height: 12.0),
               TextFormField(
                 controller: lengthStayController,
-                decoration: const InputDecoration(
-                  labelText: 'Duração (em dias)',
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  labelText: l10n.durationInDays,
+                  border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -106,9 +107,9 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
               const SizedBox(height: 16.0),
               TextFormField(
                 controller: descriptionController,
-                decoration: const InputDecoration(
-                  labelText: 'Descrição',
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  labelText: l10n.description,
+                  border: const OutlineInputBorder(),
                 ),
                 maxLines: 5,
               ),
@@ -116,18 +117,17 @@ class _TravelStopDetailsModalState extends State<TravelStopDetailsModal> {
               ElevatedButton(
                 onPressed: isAddButtonEnabled
                     ? () { addStop(
-                        int.tryParse(lengthStayController.text) ?? 0,
-                        descriptionController.text,
-                        selectedExperiencesNotifier.value,
-                      );
-                      Navigator.pop(context);
-                      lengthStayController.clear();
-                      descriptionController.clear();
-                      selectedExperiencesNotifier.value = [];
+                  int.tryParse(lengthStayController.text) ?? 0,
+                  descriptionController.text,
+                  selectedExperiencesNotifier.value,
+                );
+                Navigator.pop(context);
+                lengthStayController.clear();
+                descriptionController.clear();
+                selectedExperiencesNotifier.value = [];
                 }
                     : null,
-                child: const Text('Adicionar'),
-
+                child: Text(l10n.add),
               ),
             ],
           ),

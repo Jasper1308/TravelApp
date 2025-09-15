@@ -9,9 +9,9 @@ import 'package:travel_app/presentation/providers/participant_provider.dart';
 import 'package:travel_app/presentation/screens/participant_picker_screen.dart';
 import 'package:travel_app/presentation/screens/participant_register_screen.dart';
 import 'package:travel_app/presentation/widgets/date_input_field.dart';
+import 'package:travel_app/presentation/widgets/participant_list.dart';
 import 'package:travel_app/presentation/widgets/register_button.dart';
 import 'package:travel_app/presentation/widgets/stop_list.dart';
-import 'package:travel_app/presentation/widgets/participant_row.dart';
 
 class TravelRegisterScreen extends StatelessWidget {
   const TravelRegisterScreen({super.key});
@@ -67,7 +67,7 @@ class TravelRegisterScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(l10n.participants, style: theme.textTheme.titleSmall),
               const SizedBox(height: 8),
-              ParticipantRow(participants: register.participants),
+              ParticipantsListWidget(participants: register.participants),
               const SizedBox(height: 8),
               Row(
                 children: [

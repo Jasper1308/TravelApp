@@ -400,6 +400,132 @@ abstract class AppLocalizations {
   /// **'Created at: {createdAt}'**
   String createdAt(Object createdAt);
 
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @arrival.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival'**
+  String get arrival;
+
+  /// No description provided for @departure.
+  ///
+  /// In en, this message translates to:
+  /// **'Departure'**
+  String get departure;
+
+  /// No description provided for @durationInDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration (in days)'**
+  String get durationInDays;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @myTravels.
+  ///
+  /// In en, this message translates to:
+  /// **'My Travels'**
+  String get myTravels;
+
+  /// No description provided for @noTravels.
+  ///
+  /// In en, this message translates to:
+  /// **'No travels'**
+  String get noTravels;
+
+  /// No description provided for @defineTripPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Define the trip period to add stops.'**
+  String get defineTripPeriod;
+
+  /// No description provided for @day.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get day;
+
+  /// No description provided for @numberOfDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{1 day} other{{days} days}}'**
+  String numberOfDays(num days);
+
+  /// No description provided for @registerStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Register stop'**
+  String get registerStop;
+
+  /// No description provided for @preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferences;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @thankYouMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for using our app'**
+  String get thankYouMessage;
+
+  /// No description provided for @map.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get map;
+
+  /// No description provided for @transportMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport Method'**
+  String get transportMethod;
+
+  /// No description provided for @finalQuote.
+  ///
+  /// In en, this message translates to:
+  /// **'A journey is not measured in miles, but in moments.\nEvery page of this booklet holds more than landscapes: they are spontaneous smiles, unexpected discoveries, conversations that stayed in the soul, and silences that spoke louder than words.'**
+  String get finalQuote;
+
   /// No description provided for @loadingPdf.
   ///
   /// In en, this message translates to:

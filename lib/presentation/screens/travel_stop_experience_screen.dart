@@ -12,10 +12,12 @@ class TravelStopExperienceScreen extends StatefulWidget {
   const TravelStopExperienceScreen({super.key, required this.stopId});
 
   @override
-  State<TravelStopExperienceScreen> createState() => _TravelStopExperienceScreenState();
+  State<TravelStopExperienceScreen> createState() =>
+      _TravelStopExperienceScreenState();
 }
 
-class _TravelStopExperienceScreenState extends State<TravelStopExperienceScreen> {
+class _TravelStopExperienceScreenState
+    extends State<TravelStopExperienceScreen> {
   final _commentController = TextEditingController();
   File? _selectedPhoto;
 
@@ -71,7 +73,8 @@ class _TravelStopExperienceScreenState extends State<TravelStopExperienceScreen>
               itemBuilder: (context, index) {
                 final exp = experiences[index];
                 return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8, horizontal: 16),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
@@ -90,20 +93,30 @@ class _TravelStopExperienceScreenState extends State<TravelStopExperienceScreen>
                         const SizedBox(height: 12),
                         Text(
                           exp.comment ?? l10n.noComment,
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style:
+                          Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           l10n.createdAt(
-                            exp.createdAt.toLocal().toString().split('.')[0],
+                            exp.createdAt
+                                .toLocal()
+                                .toString()
+                                .split('.')[0],
                           ),
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                              fontStyle: FontStyle.italic),
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.redAccent),
-                            onPressed: () => provider.removeExperience(exp.id!, widget.stopId),
+                            icon: const Icon(Icons.delete,
+                                color: Colors.redAccent),
+                            onPressed: () => provider.removeExperience(
+                                exp.id!, widget.stopId),
                           ),
                         ),
                       ],
@@ -113,55 +126,66 @@ class _TravelStopExperienceScreenState extends State<TravelStopExperienceScreen>
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TextField(
-                  controller: _commentController,
-                  decoration: InputDecoration(
-                    labelText: l10n.comment,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+
+          Card(
+            margin: const EdgeInsets.all(16),
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: _commentController,
+                    decoration: InputDecoration(
+                      labelText: l10n.comment,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: _selectedPhoto != null
-                          ? Image.file(
+                  const SizedBox(height: 12),
+
+                  if (_selectedPhoto != null) ...[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
                         _selectedPhoto!,
-                        height: 50,
+                        height: 120,
+                        width: double.infinity,
                         fit: BoxFit.cover,
-                      )
-                          : ElevatedButton.icon(
-                        onPressed: _pickPhoto,
-                        icon: const Icon(Icons.photo),
-                        label: Text(l10n.photo),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: _saveExperience,
-                        icon: const Icon(Icons.save),
-                        label: Text(l10n.save),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          backgroundColor: Theme.of(context).colorScheme.secondary,
-                          foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                        ),
-                      ),
-                    ),
+                    const SizedBox(height: 12),
                   ],
-                ),
-              ],
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: _pickPhoto,
+                          icon: const Icon(Icons.photo),
+                          label: Text(l10n.photo),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: _saveExperience,
+                          icon: const Icon(Icons.save),
+                          label: Text(l10n.save),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                            foregroundColor:
+                            Theme.of(context).colorScheme.onSecondary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

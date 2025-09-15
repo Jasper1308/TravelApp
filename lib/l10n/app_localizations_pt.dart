@@ -163,5 +163,78 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Escuro';
+
+  @override
+  String get arrival => 'Chegada';
+
+  @override
+  String get departure => 'Saída';
+
+  @override
+  String get durationInDays => 'Duração (em dias)';
+
+  @override
+  String get description => 'Descrição';
+
+  @override
+  String get add => 'Adicionar';
+
+  @override
+  String get myTravels => 'Minhas Viagens';
+
+  @override
+  String get noTravels => 'Nenhuma viagem';
+
+  @override
+  String get defineTripPeriod =>
+      'Defina o período da viagem para adicionar paradas.';
+
+  @override
+  String get day => 'Dia';
+
+  @override
+  String numberOfDays(num days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dias',
+      one: '1 dia',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get registerStop => 'Cadastrar parada';
+
+  @override
+  String get preferences => 'Preferências';
+
+  @override
+  String get theme => 'Tema';
+
+  @override
+  String get language => 'Idioma';
+
+  @override
+  String get thankYouMessage => 'Obrigado por utilizar';
+
+  @override
+  String get map => 'Mapa';
+
+  @override
+  String get transportMethod => 'Meio de Transporte';
+
+  @override
+  String get finalQuote =>
+      'UMA VIAGEM NÃO SE MEDE EM MILHAS, MAS EM MOMENTOS.\nCADA PÁGINA DESTE LIVRETO GUARDA MAIS DO QUE PAISAGENS: SÃO SORRISOS ESPONTÂNEOS, DESCOBERTAS INESPERADAS, CONVERSAS QUE FICARAM NA ALMA E SILÊNCIOS QUE FALARAM MAIS QUE PALAVRAS.';
+
+  @override
   String get loadingPdf => 'Gerando PDF...';
 }

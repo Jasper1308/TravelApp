@@ -6,6 +6,7 @@ import 'package:travel_app/presentation/widgets/travel_map_widget.dart';
 import 'package:travel_app/presentation/widgets/travel_stop_card.dart';
 import 'package:travel_app/presentation/widgets/participant_list.dart';
 import 'package:travel_app/presentation/providers/pdf_generator_provider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TravelDetailsScreen extends StatefulWidget {
   final int travelId;
@@ -17,6 +18,8 @@ class TravelDetailsScreen extends StatefulWidget {
 }
 
 class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
+  GoogleMapController? _mapController;
+
   @override
   void initState() {
     super.initState();
@@ -85,24 +88,15 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                         l10n.myStops,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      ElevatedButton.icon(
-                        onPressed: pdfProvider.loading ? null : () async {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(l10n.loadingPdf)),
-                          );
-                          await pdfProvider.generateTravelPdf(travelDetails);
-                        },
-                        icon: const Icon(Icons.picture_as_pdf),
-                        label: Text(l10n.generatePdf),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.secondary,
-                          foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  TravelMapWidget(stops: travelDetails.stops),
+                  TravelMapWidget(
+                    stops: travelDetails.stops,
+                    onMapCreated: (controller) {
+                      _mapController = controller;
+                    },
+                  ),
                   const SizedBox(height: 24),
                   if (travelDetails.stops.isEmpty)
                     Center(
@@ -132,6 +126,27 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ElevatedButton.icon(
+            onPressed: pdfProvider.loading || _mapController == null
+                ? null
+                : () async {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(l10n.loadingPdf)),
+              );
+              await pdfProvider.generate(
+                context,
+                travelDetails,
+                _mapController!,
+              );
+            },
+            icon: const Icon(Icons.picture_as_pdf),
+            label: Text(l10n.generatePdf),
+          ),
+        ),
       ),
     );
   }

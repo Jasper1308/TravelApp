@@ -163,5 +163,77 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get arrival => 'Arrival';
+
+  @override
+  String get departure => 'Departure';
+
+  @override
+  String get durationInDays => 'Duration (in days)';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get myTravels => 'My Travels';
+
+  @override
+  String get noTravels => 'No travels';
+
+  @override
+  String get defineTripPeriod => 'Define the trip period to add stops.';
+
+  @override
+  String get day => 'Day';
+
+  @override
+  String numberOfDays(num days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get registerStop => 'Register stop';
+
+  @override
+  String get preferences => 'Preferences';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get thankYouMessage => 'Thank you for using our app';
+
+  @override
+  String get map => 'Map';
+
+  @override
+  String get transportMethod => 'Transport Method';
+
+  @override
+  String get finalQuote =>
+      'A journey is not measured in miles, but in moments.\nEvery page of this booklet holds more than landscapes: they are spontaneous smiles, unexpected discoveries, conversations that stayed in the soul, and silences that spoke louder than words.';
+
+  @override
   String get loadingPdf => 'Generating PDF...';
 }

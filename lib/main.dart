@@ -21,8 +21,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  ServiceLocator().init();
-
+  await ServiceLocator().init();
   runApp(
     MultiProvider(
       providers: [
@@ -53,7 +52,9 @@ void main() async {
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) => PdfGeneratorProvider(),
+          create: (context) => PdfGeneratorProvider(
+            ServiceLocator().generateTravelPdfUC,
+          ),
         ),
       ],
       child: const MyApp(),

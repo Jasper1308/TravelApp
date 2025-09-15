@@ -13,50 +13,29 @@ class TravelStopRepositoryImpl implements TravelStopRepository {
     List<TravelStop> stops,
   ) async {
     for (var stop in stops) {
-      final data = Map<String, dynamic>.from(stop.toMap());
+      final data = Map<String, dynamic>.from(stop.toMap())
+        ..remove('travelStopId')
+        ..['travelId'] = travelId;
       if (data['experiences'] is! String) {
         data['experiences'] = jsonEncode(data['experiences']);
       }
       data['travelId'] = travelId;
-      await txn.insert(
-        'travel_stops',
-        data,
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
+      await txn.insert('travel_stops', data);
     }
   }
 
   @override
   Future<List<TravelStop>> getByTravelId(
-    DatabaseExecutor txn,
-    int travelId,
-  ) async {
+      DatabaseExecutor txn,
+      int travelId,
+      ) async {
     final List<Map<String, dynamic>> maps = await txn.query(
       'travel_stops',
       where: 'travelId = ?',
       whereArgs: [travelId],
     );
     return List.generate(maps.length, (i) {
-      final rawMap = maps[i];
-      final experiencesRaw = rawMap['experiences'];
-      List<int> decodedExperiences = [];
-      if (experiencesRaw is String) {
-        try {
-          final dec = jsonDecode(experiencesRaw);
-          if (dec is List)
-            decodedExperiences = dec
-                .map((e) => e is int ? e : int.tryParse(e.toString()) ?? 0)
-                .toList();
-        } catch (_) {
-          decodedExperiences = [];
-        }
-      } else if (experiencesRaw is List) {
-        decodedExperiences = experiencesRaw
-            .map((e) => e is int ? e : int.tryParse(e.toString()) ?? 0)
-            .toList();
-      }
-      final finalMap = {...rawMap, 'experiences': decodedExperiences};
-      return TravelStop.fromMap(finalMap);
+      return TravelStop.fromMap(maps[i]);
     });
   }
 
